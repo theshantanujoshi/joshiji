@@ -1,7 +1,7 @@
 export default function Experience() {
   const experiences = [
     {
-      company: "AWS Student Builder Group at IIT Jodhpur",
+      company: "AWS Student Builder Group at Indian Institute of Technology, Jodhpur",
       roles: [
         {
           title: "Core Member",
@@ -115,14 +115,14 @@ export default function Experience() {
       <div className="space-y-6">
         <div className="readme-card group hover:border-[var(--color-accent)] transition-colors">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
-            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">IIT Jodhpur</h3>
+            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">Indian Institute of Technology, Jodhpur</h3>
             <span className="text-[var(--color-muted-foreground)] text-sm font-mono">Aug 2024 — Aug 2028</span>
           </div>
           <p className="text-[var(--color-muted-foreground)]">BS. Artificial Intelligence & Data Science</p>
         </div>
         <div className="readme-card group hover:border-[var(--color-accent)] transition-colors">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
-            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">Rani Laxmi Bai Memorial School</h3>
+            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">RLBMSSS, Lucknow</h3>
             <span className="text-[var(--color-muted-foreground)] text-sm font-mono">Apr 2020 — Apr 2024</span>
           </div>
           <p className="text-[var(--color-muted-foreground)]">High School & Intermediate Education</p>
