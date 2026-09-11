@@ -7,6 +7,12 @@ export function IntroVideo() {
   const [showVideo, setShowVideo] = useState(true);
 
   useEffect(() => {
+    const isMobile = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      setShowVideo(false);
+      return;
+    }
+
     if (showVideo) {
       document.body.style.overflow = "hidden";
     } else {
@@ -28,7 +34,7 @@ export function IntroVideo() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[999] bg-black flex items-center justify-center"
+          className="fixed inset-0 z-[999] bg-black items-center justify-center hidden md:flex"
         >
           <video
             autoPlay
