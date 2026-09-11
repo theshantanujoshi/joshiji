@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import { SmoothScroller } from "@/components/SmoothScroller";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { GlobalDelight } from "@/components/GlobalDelight";
+import { SmoothScroller } from "@/components/SmoothScroller";
 
 const montserrat = Montserrat({
   subsets: ["latin"],

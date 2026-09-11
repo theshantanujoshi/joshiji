@@ -1,13 +1,15 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function Magnetic({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const shouldReduceMotion = useReducedMotion();
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (shouldReduceMotion) return;
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current!.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);
@@ -26,8 +28,8 @@ export function Magnetic({ children }: { children: React.ReactNode }) {
       ref={ref}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      animate={{ x, y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      animate={shouldReduceMotion ? { x: 0, y: 0 } : { x, y }}
+      transition={{ type: "spring", bounce: 0, duration: 0.4 }}
     >
       {children}
     </motion.div>

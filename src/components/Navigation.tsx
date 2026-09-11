@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const links = [
@@ -16,6 +16,7 @@ export function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
   const [toast, setToast] = useState<string | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -68,7 +69,7 @@ export function Navigation() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative px-4 py-2 text-sm font-medium font-mono transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] rounded-full ${
+                className={`relative px-4 py-3 min-h-[44px] flex items-center justify-center text-sm font-medium font-mono transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] rounded-full ${
                   isActive ? "text-[var(--color-foreground)]" : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 }`}
               >
@@ -78,9 +79,9 @@ export function Navigation() {
                     className="absolute inset-0 bg-[var(--color-muted)] rounded-full border border-[var(--color-border)]"
                     initial={false}
                     transition={{
-                      type: "tween",
-                      ease: "circOut",
-                      duration: 0.25,
+                      type: "spring",
+                      bounce: 0,
+                      duration: shouldReduceMotion ? 0.01 : 0.4,
                     }}
                   />
                 )}
@@ -103,9 +104,10 @@ export function Navigation() {
       <AnimatePresence>
         {toast && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
+            exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+            transition={{ duration: shouldReduceMotion ? 0.2 : 0.3 }}
             className="fixed bottom-6 right-6 z-50 bg-[var(--color-foreground)] text-[var(--color-background)] font-mono px-4 py-2 rounded shadow-xl text-sm border border-[var(--color-border)]"
           >
             {toast}

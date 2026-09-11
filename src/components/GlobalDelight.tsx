@@ -61,7 +61,7 @@ export function GlobalDelight() {
       document.documentElement.style.setProperty("--color-muted", "#2A1D00");
       document.documentElement.style.setProperty("--color-border", "#5C3D00");
       document.documentElement.style.setProperty("--color-accent", "#FFB000");
-      document.documentElement.style.setProperty("--color-muted-foreground", "#D98E00");
+      document.documentElement.style.setProperty("--color-muted-foreground", "#E5A000");
     } else {
       document.body.classList.remove("sudo-crt");
       document.documentElement.style.removeProperty("--color-background");

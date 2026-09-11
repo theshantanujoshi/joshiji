@@ -1,15 +1,17 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function Template({ children }: { children: React.ReactNode }) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      exit={{ opacity: 0, y: -15, filter: "blur(4px)" }}
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15, filter: shouldReduceMotion ? "none" : "blur(4px)" }}
+      animate={{ opacity: 1, y: 0, filter: shouldReduceMotion ? "none" : "blur(0px)" }}
+      exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -15, filter: shouldReduceMotion ? "none" : "blur(4px)" }}
       transition={{
-        duration: 0.4,
+        duration: shouldReduceMotion ? 0.2 : 0.4,
         ease: "easeInOut",
       }}
       className="w-full h-full"
