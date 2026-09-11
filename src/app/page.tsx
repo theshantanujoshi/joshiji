@@ -21,9 +21,9 @@ export default function Home() {
       <div className="readme-card mt-8">
         <h2>Current Focus</h2>
         <ul>
-          <li>→ Scaling a 1,500+ student dev collective at bits&bytes™</li>
-          <li>→ Fostering a builder-first technical community via AWS Student Builder Group</li>
-          <li>→ Engineering intuitive frontend architectures and exploring Agentic AI</li>
+          <li>Scaling a 1,500+ student dev collective at bits&bytes™</li>
+          <li>Fostering a builder-first technical community via AWS Student Builder Group</li>
+          <li>Engineering intuitive frontend architectures and exploring Agentic AI</li>
         </ul>
       </div>
 
