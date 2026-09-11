@@ -57,6 +57,8 @@ export default function RootLayout({
             mouseReact={false}
             dpr={1}
             fps={30}
+            className=""
+            style={{}}
           />
         </div>
 
