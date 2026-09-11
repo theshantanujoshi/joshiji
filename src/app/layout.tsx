@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
@@ -6,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { GlobalDelight } from "@/components/GlobalDelight";
 import { SmoothScroller } from "@/components/SmoothScroller";
 import CRTWarp from "@/components/CRTWarp";
+import { IntroVideo } from "@/components/IntroVideo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,16 +26,20 @@ export const metadata: Metadata = {
   description: "Builder focused on original tech and agentic AI.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const introPlayed = cookieStore.get("introPlayed")?.value;
+
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased font-sans`}
       >
+        {!introPlayed && <IntroVideo />}
         <GlobalDelight />
         
         {/* Fixed Background Animation - Outside the Scroller! */}
