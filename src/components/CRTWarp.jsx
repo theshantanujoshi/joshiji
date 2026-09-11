@@ -146,8 +146,8 @@ export default function CRTWarp({
   dpr = 1,
   fps = 30,
   paused = false,
-  className,
-  style
+  className = '',
+  style = {}
 }) {
   const containerRef = useRef(null);
   const materialRef = useRef(null);
