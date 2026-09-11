@@ -55,7 +55,7 @@ export default function Socials() {
                     <Icon className="w-5 h-5 text-[var(--color-muted-foreground)] group-hover:text-[var(--color-accent)] transition-colors" />
                   </div>
                 </Magnetic>
-                <h3 className="font-bold font-['Space_Grotesk'] text-[var(--color-foreground)] m-0 border-0 pb-0 text-sm sm:text-base">{social.name}</h3>
+                <h3 className="font-bold font-mono text-[var(--color-foreground)] m-0 border-0 pb-0 text-sm sm:text-base">{social.name}</h3>
               </div>
               <span className={`text-[var(--color-muted-foreground)] transition-all duration-300 flex items-center justify-center w-5 h-5 ${isCopied ? "text-green-500 scale-110" : "group-hover:text-[var(--color-accent)] group-hover:translate-x-1 group-hover:-translate-y-1"}`}>
                 {social.copyText ? (isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />) : "↗"}

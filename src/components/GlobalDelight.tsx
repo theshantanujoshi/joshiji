@@ -176,7 +176,7 @@ export function GlobalDelight() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="relative w-full max-w-lg bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl shadow-2xl overflow-hidden font-['Space_Grotesk'] flex flex-col"
+              className="relative w-full max-w-lg bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl shadow-2xl overflow-hidden font-mono flex flex-col"
             >
               <div className="flex items-center px-4 py-3 border-b border-[var(--color-border)]">
                 <span className="text-[var(--color-muted-foreground)] mr-2">&gt;</span>

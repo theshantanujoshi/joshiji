@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Archivo, Space_Grotesk } from "next/font/google";
+import { Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroller } from "@/components/SmoothScroller";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { GlobalDelight } from "@/components/GlobalDelight";
 
-const spaceGrotesk = Space_Grotesk({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-jetbrains-mono",
 });
 
 const archivo = Archivo({
@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${archivo.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${archivo.variable} ${jetbrainsMono.variable} antialiased`}
       >
         <GlobalDelight />
         <SmoothScroller>

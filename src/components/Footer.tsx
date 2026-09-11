@@ -3,7 +3,7 @@ import SignatureAnimation from "./SignatureAnimation";
 export function Footer() {
   return (
     <footer className="w-full border-t border-[var(--color-border)] mt-auto bg-transparent overflow-hidden">
-      <div className="max-w-[1000px] mx-auto px-[var(--spacing-md)] py-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 text-sm text-[var(--color-muted-foreground)] font-['Space_Grotesk']">
+      <div className="max-w-[1000px] mx-auto px-[var(--spacing-md)] py-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 text-sm text-[var(--color-muted-foreground)] font-mono">
         
         {/* Left: Copyright */}
         <div className="flex justify-center md:justify-start flex-1 order-3 md:order-1">

@@ -22,6 +22,8 @@
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
+  
+  --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
 @layer base {
@@ -42,7 +44,7 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Space Grotesk", sans-serif;
+    font-family: var(--font-jetbrains-mono), monospace;
   }
 
   ::selection {

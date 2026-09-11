@@ -78,7 +78,7 @@ export default function Experience() {
           <div key={idx} className="readme-card relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-1 h-full bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
             
-            <h3 className="text-xl font-bold font-['Space_Grotesk'] text-[var(--color-foreground)] mb-4">{exp.company}</h3>
+            <h3 className="text-xl font-bold font-mono text-[var(--color-foreground)] mb-4">{exp.company}</h3>
             
             <div className="space-y-6">
               {exp.roles.map((role, roleIdx) => (
@@ -86,7 +86,7 @@ export default function Experience() {
                   
                   <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
                     <h4 className="font-semibold text-base text-[var(--color-foreground)]">{role.title}</h4>
-                    <span className="text-[var(--color-muted-foreground)] text-sm font-['Space_Grotesk']">{role.date}</span>
+                    <span className="text-[var(--color-muted-foreground)] text-sm font-mono">{role.date}</span>
                   </div>
                   
                   {role.type && <p className="text-sm text-[var(--color-accent)] mb-2">{role.type}</p>}
@@ -98,7 +98,7 @@ export default function Experience() {
                   {role.skills && role.skills.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-2">
                       {role.skills.map(skill => (
-                        <span key={skill} className="text-xs px-2 py-1 bg-[var(--color-muted)] rounded text-[var(--color-muted-foreground)] font-['Space_Grotesk']">
+                        <span key={skill} className="text-xs px-2 py-1 bg-[var(--color-muted)] rounded text-[var(--color-muted-foreground)] font-mono">
                           {skill}
                         </span>
                       ))}
@@ -111,46 +111,46 @@ export default function Experience() {
         ))}
       </div>
 
-      <h2 className="text-2xl font-bold font-['Space_Grotesk'] text-[var(--color-foreground)] mt-16 mb-8 border-b border-[var(--color-border)] pb-4">Education</h2>
+      <h2 className="text-2xl font-bold font-mono text-[var(--color-foreground)] mt-16 mb-8 border-b border-[var(--color-border)] pb-4">Education</h2>
       <div className="space-y-6">
         <div className="readme-card group hover:border-[var(--color-accent)] transition-colors">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
-            <h3 className="text-lg font-bold font-['Space_Grotesk'] text-[var(--color-foreground)]">IIT Jodhpur</h3>
-            <span className="text-[var(--color-muted-foreground)] text-sm font-['Space_Grotesk']">Aug 2024 — Aug 2028</span>
+            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">IIT Jodhpur</h3>
+            <span className="text-[var(--color-muted-foreground)] text-sm font-mono">Aug 2024 — Aug 2028</span>
           </div>
           <p className="text-[var(--color-muted-foreground)]">BS. Artificial Intelligence & Data Science</p>
         </div>
         <div className="readme-card group hover:border-[var(--color-accent)] transition-colors">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
-            <h3 className="text-lg font-bold font-['Space_Grotesk'] text-[var(--color-foreground)]">Rani Laxmi Bai Memorial School</h3>
-            <span className="text-[var(--color-muted-foreground)] text-sm font-['Space_Grotesk']">Apr 2020 — Apr 2024</span>
+            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">Rani Laxmi Bai Memorial School</h3>
+            <span className="text-[var(--color-muted-foreground)] text-sm font-mono">Apr 2020 — Apr 2024</span>
           </div>
           <p className="text-[var(--color-muted-foreground)]">High School & Intermediate Education</p>
         </div>
         <div className="readme-card group hover:border-[var(--color-accent)] transition-colors">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
-            <h3 className="text-lg font-bold font-['Space_Grotesk'] text-[var(--color-foreground)]">City Montessori School, Lucknow</h3>
-            <span className="text-[var(--color-muted-foreground)] text-sm font-['Space_Grotesk']">Apr 2015 — Apr 2020</span>
+            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">City Montessori School, Lucknow</h3>
+            <span className="text-[var(--color-muted-foreground)] text-sm font-mono">Apr 2015 — Apr 2020</span>
           </div>
           <p className="text-[var(--color-muted-foreground)]">Middle School Education</p>
         </div>
       </div>
 
-      <h2 className="text-2xl font-bold font-['Space_Grotesk'] text-[var(--color-foreground)] mt-16 mb-8 border-b border-[var(--color-border)] pb-4">Volunteering & Memberships</h2>
+      <h2 className="text-2xl font-bold font-mono text-[var(--color-foreground)] mt-16 mb-8 border-b border-[var(--color-border)] pb-4">Volunteering & Memberships</h2>
       <div className="space-y-6">
         <div className="readme-card relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
           <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-            <h3 className="text-lg font-bold font-['Space_Grotesk'] text-[var(--color-foreground)]">Google Cloud & NVIDIA</h3>
-            <span className="text-[var(--color-muted-foreground)] text-sm font-['Space_Grotesk']">Jun 2026 — Present</span>
+            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">Google Cloud & NVIDIA</h3>
+            <span className="text-[var(--color-muted-foreground)] text-sm font-mono">Jun 2026 — Present</span>
           </div>
           <p className="text-[var(--color-accent)] font-medium mb-2">Member</p>
         </div>
         <div className="readme-card relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
           <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-            <h3 className="text-lg font-bold font-['Space_Grotesk'] text-[var(--color-foreground)]">Hack4Good</h3>
-            <span className="text-[var(--color-muted-foreground)] text-sm font-['Space_Grotesk']">Apr 2026 — Present</span>
+            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">Hack4Good</h3>
+            <span className="text-[var(--color-muted-foreground)] text-sm font-mono">Apr 2026 — Present</span>
           </div>
           <p className="text-[var(--color-accent)] font-medium mb-2">Volunteer</p>
           <p className="text-[var(--color-muted-foreground)] text-sm">Coordinated logistics and real-time social media content.</p>
@@ -158,15 +158,15 @@ export default function Experience() {
         <div className="readme-card relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-1 h-full bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
           <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-            <h3 className="text-lg font-bold font-['Space_Grotesk'] text-[var(--color-foreground)]">Google Developer Groups Lucknow</h3>
-            <span className="text-[var(--color-muted-foreground)] text-sm font-['Space_Grotesk']">Nov 2025 — Present</span>
+            <h3 className="text-lg font-bold font-mono text-[var(--color-foreground)]">Google Developer Groups Lucknow</h3>
+            <span className="text-[var(--color-muted-foreground)] text-sm font-mono">Nov 2025 — Present</span>
           </div>
           <p className="text-[var(--color-accent)] font-medium mb-2">Member</p>
           <p className="text-[var(--color-muted-foreground)] text-sm">Participating in frontend dev tasks and local tech events.</p>
         </div>
       </div>
 
-      <h2 className="text-2xl font-bold font-['Space_Grotesk'] text-[var(--color-foreground)] mt-16 mb-8 border-b border-[var(--color-border)] pb-4">Certifications</h2>
+      <h2 className="text-2xl font-bold font-mono text-[var(--color-foreground)] mt-16 mb-8 border-b border-[var(--color-border)] pb-4">Certifications</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {[
           { name: "Notion Essentials Badge", issuer: "Notion", date: "Jun 2026" },
@@ -181,10 +181,10 @@ export default function Experience() {
         ].map((cert, idx) => (
           <div key={idx} className="readme-card group hover:border-[var(--color-accent)] transition-colors !mb-0 p-4">
             <div className="flex flex-col">
-              <h3 className="font-semibold text-[var(--color-foreground)] font-['Space_Grotesk'] leading-tight mb-2">{cert.name}</h3>
+              <h3 className="font-semibold text-[var(--color-foreground)] font-mono leading-tight mb-2">{cert.name}</h3>
               <div className="flex justify-between items-center mt-auto">
                 <span className="text-xs text-[var(--color-muted-foreground)] bg-[var(--color-muted)] px-2 py-1 rounded">{cert.issuer}</span>
-                <span className="text-xs text-[var(--color-muted-foreground)] font-['Space_Grotesk']">{cert.date}</span>
+                <span className="text-xs text-[var(--color-muted-foreground)] font-mono">{cert.date}</span>
               </div>
             </div>
           </div>

@@ -65,7 +65,7 @@ export function Navigation() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative px-4 py-2 text-sm font-medium font-['Space_Grotesk'] transition-colors whitespace-nowrap ${
+                className={`relative px-4 py-2 text-sm font-medium font-mono transition-colors whitespace-nowrap ${
                   isActive ? "text-[var(--color-foreground)]" : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 }`}
               >
@@ -103,7 +103,7 @@ export function Navigation() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="fixed bottom-6 right-6 z-50 bg-[var(--color-foreground)] text-[var(--color-background)] font-['Space_Grotesk'] px-4 py-2 rounded shadow-xl text-sm border border-[var(--color-border)]"
+            className="fixed bottom-6 right-6 z-50 bg-[var(--color-foreground)] text-[var(--color-background)] font-mono px-4 py-2 rounded shadow-xl text-sm border border-[var(--color-border)]"
           >
             {toast}
           </motion.div>

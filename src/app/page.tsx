@@ -35,7 +35,7 @@ export default function Home() {
             "Generative AI", "Quantitative Reasoning", "Narrative Architecture", 
             "Digital Analytics", "Crisis Management"
           ].map((tech) => (
-            <span key={tech} className="px-3 py-1 bg-[var(--color-muted)] text-[var(--color-muted-foreground)] rounded-full text-sm font-['Space_Grotesk']">
+            <span key={tech} className="px-3 py-1 bg-[var(--color-muted)] text-[var(--color-muted-foreground)] rounded-full text-sm font-mono">
               {tech}
             </span>
           ))}

@@ -42,7 +42,7 @@ export default function Projects() {
         {projects.map((project, i) => (
           <div key={i} className="readme-card group hover:border-[var(--color-accent)] transition-colors">
             <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 no-underline mb-2 group/link">
-              <h3 className="text-xl font-bold font-['Space_Grotesk'] text-[var(--color-foreground)] m-0 border-0 pb-0 group-hover/link:text-[var(--color-accent)] transition-colors">
+              <h3 className="text-xl font-bold font-mono text-[var(--color-foreground)] m-0 border-0 pb-0 group-hover/link:text-[var(--color-accent)] transition-colors">
                 <ScrambleText text={project.title} />
               </h3>
               <span className="text-[var(--color-muted-foreground)] group-hover/link:text-[var(--color-accent)] transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 ml-1">↗</span>
@@ -50,7 +50,7 @@ export default function Projects() {
             <p className="mb-4 text-[var(--color-muted-foreground)]">{project.description}</p>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
-                <span key={t} className="text-xs px-2 py-1 bg-[var(--color-muted)] rounded text-[var(--color-muted-foreground)] font-['Space_Grotesk']">
+                <span key={t} className="text-xs px-2 py-1 bg-[var(--color-muted)] rounded text-[var(--color-muted-foreground)] font-mono">
                   {t}
                 </span>
               ))}
