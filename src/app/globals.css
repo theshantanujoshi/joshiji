@@ -74,6 +74,11 @@
   padding-bottom: var(--spacing-sm);
 }
 
+.readme-card h2:first-child,
+.readme-card h3:first-child {
+  margin-top: 0;
+}
+
 .readme-container p {
   margin-bottom: var(--spacing-md);
   line-height: 1.6;
