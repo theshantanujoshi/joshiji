@@ -39,6 +39,7 @@ export function GlobalDelight() {
     { id: "contact", label: "Contact & Socials", action: () => router.push("/contact") },
     { id: "resume", label: "Download Resume", action: () => window.open("/Shantanu_Joshi_Resume.pdf", "_blank") },
     { id: "sudo", label: "Toggle Sudo Mode", action: () => setSudoMode(p => !p) },
+    { id: "whoami", label: "whoami", action: () => alert("> I am Shantanu Joshi. Nice to meet you.") },
   ];
 
   const filteredCommands = commands.filter(c => c.label.toLowerCase().includes(search.toLowerCase()));
@@ -99,6 +100,7 @@ export function GlobalDelight() {
   // Apply Sudo Theme
   useEffect(() => {
     if (sudoMode) {
+      document.body.classList.add("sudo-crt");
       document.documentElement.style.setProperty("--color-background", "#09090B");
       document.documentElement.style.setProperty("--color-foreground", "#FFB000");
       document.documentElement.style.setProperty("--color-muted", "#2A1D00");
@@ -106,6 +108,7 @@ export function GlobalDelight() {
       document.documentElement.style.setProperty("--color-accent", "#FFB000");
       document.documentElement.style.setProperty("--color-muted-foreground", "#D98E00");
     } else {
+      document.body.classList.remove("sudo-crt");
       document.documentElement.style.removeProperty("--color-background");
       document.documentElement.style.removeProperty("--color-foreground");
       document.documentElement.style.removeProperty("--color-muted");
@@ -114,6 +117,24 @@ export function GlobalDelight() {
       document.documentElement.style.removeProperty("--color-muted-foreground");
     }
   }, [sudoMode]);
+
+  // Global mouse position and console greeting
+  useEffect(() => {
+    console.log(
+      "%c Shantanu Joshi \n%cBuilder & Agentic AI Engineer\n%c=========================\n%c> System initialized.\n> Type 'sudo' anywhere on the page to gain root.",
+      "font-size: 24px; font-weight: bold; color: #EF4444;",
+      "font-size: 14px; color: #A1A1AA;",
+      "color: #475569;",
+      "color: #FFB000; font-family: monospace;"
+    );
+
+    const handleMouseMove = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
     if (filteredCommands.length === 0) return;
