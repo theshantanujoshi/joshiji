@@ -11,6 +11,9 @@ export default function Socials() {
   const handleCopy = (e: React.MouseEvent, text: string) => {
     e.preventDefault();
     navigator.clipboard.writeText(text);
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(50); // Subtle haptic tap
+    }
     setCopiedText(text);
     setTimeout(() => setCopiedText(null), 2000);
   };
