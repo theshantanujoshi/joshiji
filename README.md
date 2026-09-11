@@ -8,7 +8,7 @@ Live at: [www.shantanu.lol](https://www.shantanu.lol)
 
 This repository holds the source code for the portfolio, designed with an obsessive focus on performance, fluid animations, typography, and "Apple-like" aesthetics—all driven by a modern React server-component architecture.
 
-## ✨ Features
+## Features
 
 - **Fluid Smooth Scrolling:** Custom implementation of Lenis for buttery-smooth scroll hijacking that feels native and responsive.
 - **WebGL CRT Warp Background:** A stunning, interactive CRT plasma distortion background powered by Three.js and custom GLSL shaders that sits fixed behind the content.
@@ -16,7 +16,7 @@ This repository holds the source code for the portfolio, designed with an obsess
 - **Delightful Interactions:** Sophisticated micro-interactions built with Framer Motion and GSAP.
 - **Responsive & Accessible:** Fully responsive design built entirely with Tailwind CSS v4, supporting all device sizes with accessible semantic HTML.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework:** [Next.js 16](https://nextjs.org/) (App Router, Turbopack)
 - **Library:** [React 19](https://react.dev/)
@@ -27,7 +27,7 @@ This repository holds the source code for the portfolio, designed with an obsess
 - **Icons:** [Lucide React](https://lucide.dev/) & React Icons
 - **Deployment:** [Vercel](https://vercel.com/)
 
-## 🚀 Getting Started
+## Getting Started
 
 To run this project locally, make sure you have Node.js installed, then follow these steps:
 
@@ -50,12 +50,12 @@ To run this project locally, make sure you have Node.js installed, then follow t
 4. **View the application:**
    Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## 📂 Architecture
+## Architecture
 
 - `src/app/layout.tsx`: Root layout handling global font injection (Inter & JetBrains Mono), the global `SmoothScroller` provider, and the underlying fixed `CRTWarp` WebGL background.
 - `src/app/page.tsx`: The main landing page / index.
 - `src/components/`: Reusable React components including navigation, footers, webGL effects, and animated text blocks (`ScrambleText`).
 
-## 📜 License
+## License
 
 Designed and engineered by Shantanu Joshi. Open-sourced under the ISC License.
