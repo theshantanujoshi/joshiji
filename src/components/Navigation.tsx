@@ -52,9 +52,9 @@ export function Navigation() {
               <img 
                 src="https://github.com/theshantanujoshi.png" 
                 alt="Shantanu Joshi" 
-                className="w-8 h-8 rounded-full border border-white/20 group-hover:border-[var(--color-accent)] transition-all duration-300 object-cover group-hover:scale-105" 
+                className="w-10 h-10 rounded-full border border-white/20 group-hover:border-[var(--color-accent)] transition-all duration-300 object-cover group-hover:scale-105" 
               />
-              <span className="text-sm font-medium font-mono text-[var(--color-foreground)] group-hover:text-[var(--color-accent)] transition-colors">
+              <span className="text-base font-bold font-mono text-[var(--color-foreground)] tracking-tight group-hover:text-[var(--color-accent)] transition-colors">
                 Shantanu Joshi
               </span>
             </Link>
