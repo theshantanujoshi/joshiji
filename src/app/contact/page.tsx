@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, Calendar, FileText, PenTool } from "lucide-react";
+import { Mail, Phone, Calendar, FileText, PenTool, Copy, Check } from "lucide-react";
 import { FaGithub, FaTwitter, FaLinkedin, FaInstagram, FaDiscord } from "react-icons/fa";
 import { Magnetic } from "@/components/Magnetic";
 
@@ -57,8 +57,8 @@ export default function Socials() {
                 </Magnetic>
                 <h3 className="font-bold font-['Space_Grotesk'] text-[var(--color-foreground)] m-0 border-0 pb-0 text-sm sm:text-base">{social.name}</h3>
               </div>
-              <span className={`text-[var(--color-muted-foreground)] transition-all duration-300 ${isCopied ? "text-green-500 scale-110" : "group-hover:text-[var(--color-accent)] group-hover:translate-x-1 group-hover:-translate-y-1"}`}>
-                {social.copyText ? (isCopied ? "✓" : "📋") : "↗"}
+              <span className={`text-[var(--color-muted-foreground)] transition-all duration-300 flex items-center justify-center w-5 h-5 ${isCopied ? "text-green-500 scale-110" : "group-hover:text-[var(--color-accent)] group-hover:translate-x-1 group-hover:-translate-y-1"}`}>
+                {social.copyText ? (isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />) : "↗"}
               </span>
             </a>
           );
