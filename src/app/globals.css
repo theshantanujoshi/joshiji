@@ -23,7 +23,8 @@
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
   
-  --font-mono: var(--font-jetbrains-mono), monospace;
+  --font-sans: var(--font-montserrat), sans-serif;
+  --font-mono: var(--font-montserrat), sans-serif;
 }
 
 @layer base {
@@ -36,7 +37,7 @@
     min-height: 100vh;
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-poppins), sans-serif;
+    font-family: var(--font-montserrat), sans-serif;
   }
   
   body::before {
@@ -52,10 +53,6 @@
     z-index: -1;
     pointer-events: none;
     will-change: transform;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-jetbrains-mono), monospace;
   }
 
   ::selection {
