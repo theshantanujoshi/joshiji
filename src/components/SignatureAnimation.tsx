@@ -17,21 +17,34 @@ function SignatureAnimation({
   const text = children.split("");
 
   useEffect(() => {
-    async function animateLetters() {
+    let isMounted = true;
+    let observer: IntersectionObserver | null = null;
+    let cancelCurrentAnimation = false;
+
+    const resetPaths = () => {
       if (!signRef.current) return;
-
-      const letterDivs = Array.from(
-        signRef.current.children
-      ) as HTMLDivElement[];
-
+      const letterDivs = Array.from(signRef.current.children) as HTMLDivElement[];
       for (let i = 0; i < letterDivs.length; i++) {
         const paths = letterDivs[i].querySelectorAll("path");
-
         for (const path of Array.from(paths)) {
+          path.style.transition = "none";
           const length = path.getTotalLength();
           path.style.strokeDasharray = `${length}`;
           path.style.strokeDashoffset = `${length}`;
+        }
+      }
+    };
 
+    const playAnimation = async () => {
+      if (!signRef.current) return;
+      const letterDivs = Array.from(signRef.current.children) as HTMLDivElement[];
+
+      for (let i = 0; i < letterDivs.length; i++) {
+        if (cancelCurrentAnimation || !isMounted) break;
+        const paths = letterDivs[i].querySelectorAll("path");
+
+        for (const path of Array.from(paths)) {
+          if (cancelCurrentAnimation || !isMounted) break;
           path.style.transition = `stroke-dashoffset ${duration}s ease-in-out`;
           
           // Force reflow
@@ -39,20 +52,48 @@ function SignatureAnimation({
           
           path.style.strokeDashoffset = "0";
 
-          await new Promise((resolve) => {
-            setTimeout(() => {
-              resolve(true);
-            }, duration * 1000);
-          });
+          await new Promise((resolve) => setTimeout(resolve, duration * 1000));
         }
 
-        if (delay > 0) {
+        if (delay > 0 && !cancelCurrentAnimation && isMounted) {
           await new Promise((resolve) => setTimeout(resolve, delay * 1000));
         }
       }
+    };
+
+    resetPaths();
+
+    observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          cancelCurrentAnimation = false;
+          resetPaths();
+          // Small delay before starting to ensure reflow is applied
+          setTimeout(() => {
+            if (isMounted && !cancelCurrentAnimation) {
+              playAnimation();
+            }
+          }, 50);
+        } else {
+          // Cancel ongoing animation when it goes out of view
+          cancelCurrentAnimation = true;
+          resetPaths();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (signRef.current) {
+      observer.observe(signRef.current);
     }
 
-    animateLetters();
+    return () => {
+      isMounted = false;
+      cancelCurrentAnimation = true;
+      if (observer) {
+        observer.disconnect();
+      }
+    };
   }, [text, duration, delay]);
 
   return (

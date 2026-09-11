@@ -13,7 +13,7 @@ export function Footer() {
         {/* Center: Signature */}
         <div className="flex justify-center items-center flex-1 order-1 md:order-2">
           <div className="scale-75 md:scale-90 h-[50px] flex items-center justify-center">
-            <SignatureAnimation duration={0.8} delay={0.1}>
+            <SignatureAnimation duration={1.2} delay={0.2}>
               Shantanu Joshi
             </SignatureAnimation>
           </div>
