@@ -48,8 +48,12 @@ export function Navigation() {
       <div className="w-full sticky top-6 z-50 flex justify-center px-4 mt-6 pointer-events-none">
         <nav className="w-full max-w-4xl border border-white/10 px-6 py-3 flex flex-col md:flex-row items-center justify-between bg-[var(--color-card)]/70 backdrop-blur-xl md:rounded-full rounded-3xl shadow-2xl pointer-events-auto transition-all">
           <div className="flex items-center mb-4 md:mb-0">
-            <Link href="/" className="font-['Space_Grotesk'] font-bold text-xl tracking-tight text-[var(--color-foreground)] no-underline hover:text-[var(--color-accent)] transition-colors">
-              Shantanu Joshi
+            <Link href="/" className="no-underline">
+              <img 
+                src="https://github.com/theshantanujoshi.png" 
+                alt="Shantanu Joshi" 
+                className="w-10 h-10 rounded-full border border-white/20 hover:border-[var(--color-accent)] transition-all duration-300 object-cover hover:scale-105" 
+              />
             </Link>
           </div>
 
