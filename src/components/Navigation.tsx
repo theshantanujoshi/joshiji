@@ -19,6 +19,11 @@ export function Navigation() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if user is using a modifier key (like Ctrl+C to copy)
+      if (e.ctrlKey || e.metaKey || e.altKey) {
+        return;
+      }
+
       // Ignore if user is typing in an input or textarea
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
         return;
@@ -65,9 +70,9 @@ export function Navigation() {
                     className="absolute inset-0 bg-[var(--color-muted)] rounded-md border border-[var(--color-border)]"
                     initial={false}
                     transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 30,
+                      type: "tween",
+                      ease: "circOut",
+                      duration: 0.25,
                     }}
                   />
                 )}
@@ -80,6 +85,8 @@ export function Navigation() {
               </Link>
             );
           })}
+          {/* Spacer to prevent scrollbar jump on right-most item bounce */}
+          <div className="w-2 flex-shrink-0 hidden md:block" />
         </div>
       </nav>
 

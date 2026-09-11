@@ -82,8 +82,7 @@ export default function Experience() {
             
             <div className="space-y-6">
               {exp.roles.map((role, roleIdx) => (
-                <div key={roleIdx} className="relative pl-4 border-l border-[var(--color-border)]">
-                  <div className="absolute w-2 h-2 bg-[var(--color-muted-foreground)] rounded-full -left-[4.5px] top-1.5 group-hover:bg-[var(--color-accent)] transition-colors"></div>
+                <div key={roleIdx} className="relative">
                   
                   <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
                     <h4 className="font-semibold text-base text-[var(--color-foreground)]">{role.title}</h4>

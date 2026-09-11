@@ -1,15 +1,20 @@
+import { ScrambleText } from "@/components/ScrambleText";
+
 export default function Home() {
   return (
     <div className="readme-container">
-      <h1>Hi, I'm Shantanu 👋</h1>
+      <h1 className="flex items-center gap-2">
+        <span>Hi, I'm <ScrambleText text="Shantanu" /></span>
+        <span className="inline-block w-3 h-[0.8em] bg-[var(--color-accent)] animate-pulse"></span>
+      </h1>
       
       <div className="readme-card mt-8">
         <h2>About Me</h2>
         <p>
-          I'm an undergrad at IIT Jodhpur studying AI & Data Science and a builder at bits&bytes™. 
-          I'm dedicated to building systems that empower people with absolute freedom and ownership. 
-          I have no interest in the corporate status quo or iterating on legacy wrappers. Instead, my focus is 
-          strictly on engineering genuinely useful, original technology that makes a tangible impact.
+          I'm an AI & Data Science undergrad at IIT Jodhpur and a builder at bits&bytes. I like working on technology that gives people more freedom and control over what they use.
+        </p>
+        <p>
+          I'm less interested in chasing corporate trends or building another layer on top of existing products. I'd rather spend my time making useful, original things that solve real problems.
         </p>
       </div>
 

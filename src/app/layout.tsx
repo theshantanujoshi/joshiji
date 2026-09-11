@@ -4,6 +4,7 @@ import "./globals.css";
 import { SmoothScroller } from "@/components/SmoothScroller";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { GlobalDelight } from "@/components/GlobalDelight";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -17,8 +18,8 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "Popolio | Minimal Readme Portfolio",
-  description: "A minimal, readme-style portfolio.",
+  title: "Shantanu Joshi",
+  description: "Builder focused on original tech and agentic AI.",
 };
 
 export default function RootLayout({
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${archivo.variable} ${spaceGrotesk.variable} antialiased`}
       >
+        <GlobalDelight />
         <SmoothScroller>
           <div className="min-h-screen flex flex-col">
             {/* Top Navigation */}
