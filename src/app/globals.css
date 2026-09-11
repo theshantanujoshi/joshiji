@@ -40,7 +40,7 @@
     background-attachment: fixed;
     background-position: center;
     color: var(--color-foreground);
-    font-family: "Archivo", sans-serif;
+    font-family: var(--font-poppins), sans-serif;
   }
   
   h1, h2, h3, h4, h5, h6 {
