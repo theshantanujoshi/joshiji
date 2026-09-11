@@ -45,12 +45,13 @@ export function Navigation() {
 
   return (
     <>
-      <nav className="w-full sticky top-0 border-b border-[var(--color-border)] px-6 py-4 flex flex-col md:flex-row items-center justify-between bg-[var(--color-background)]/90 backdrop-blur-md z-50">
-        <div className="flex items-center mb-4 md:mb-0">
-          <Link href="/" className="font-['Space_Grotesk'] font-bold text-xl tracking-tight text-[var(--color-foreground)] no-underline hover:text-[var(--color-accent)] transition-colors">
-            Shantanu Joshi
-          </Link>
-        </div>
+      <div className="w-full sticky top-6 z-50 flex justify-center px-4 pointer-events-none">
+        <nav className="w-full max-w-4xl border border-white/10 px-6 py-3 flex flex-col md:flex-row items-center justify-between bg-[var(--color-card)]/70 backdrop-blur-xl md:rounded-full rounded-3xl shadow-2xl pointer-events-auto transition-all">
+          <div className="flex items-center mb-4 md:mb-0">
+            <Link href="/" className="font-['Space_Grotesk'] font-bold text-xl tracking-tight text-[var(--color-foreground)] no-underline hover:text-[var(--color-accent)] transition-colors">
+              Shantanu Joshi
+            </Link>
+          </div>
 
         <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 hide-scrollbar">
           {links.map((link) => {
@@ -67,7 +68,7 @@ export function Navigation() {
                 {isActive && (
                   <motion.div
                     layoutId="active-nav-horizontal"
-                    className="absolute inset-0 bg-[var(--color-muted)] rounded-md border border-[var(--color-border)]"
+                    className="absolute inset-0 bg-[var(--color-muted)] rounded-full border border-[var(--color-border)]"
                     initial={false}
                     transition={{
                       type: "tween",
@@ -89,6 +90,7 @@ export function Navigation() {
           <div className="w-2 flex-shrink-0 hidden md:block" />
         </div>
       </nav>
+      </div>
 
       {/* Keyboard Navigation Toast */}
       <AnimatePresence>
