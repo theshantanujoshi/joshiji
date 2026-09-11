@@ -1,10 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function IntroVideo() {
   const [showVideo, setShowVideo] = useState(true);
+
+  useEffect(() => {
+    if (showVideo) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showVideo]);
 
   const handleVideoEnd = () => {
     setShowVideo(false);
@@ -17,7 +28,7 @@ export function IntroVideo() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+          className="fixed inset-0 z-[999] bg-black flex items-center justify-center"
         >
           <video
             autoPlay
