@@ -24,7 +24,7 @@ export function IntroVideo() {
             muted
             playsInline
             onEnded={handleVideoEnd}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           >
             <source src="/IntroVideo.mp4" type="video/mp4" />
           </video>
