@@ -39,7 +39,7 @@ export default function RootLayout({
             <Navigation />
             
             {/* Main Content Area */}
-            <main className="flex-1 w-full relative">
+            <main className="flex-1 w-full relative pt-12 md:pt-16 pb-12">
               {children}
             </main>
             
