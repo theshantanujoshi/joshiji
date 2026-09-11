@@ -10,7 +10,12 @@ export function ScrambleText({ text }: { text: string }) {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (isHovering) {
+    // prefers-reduced-motion guard
+    const prefersReducedMotion = typeof window !== 'undefined' 
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches 
+      : false;
+
+    if (isHovering && !prefersReducedMotion) {
       let iteration = 0;
       intervalRef.current = setInterval(() => {
         setDisplayText((current) =>

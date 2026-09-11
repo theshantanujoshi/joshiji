@@ -5,7 +5,7 @@ export default function Home() {
     <div className="readme-container">
       <h1 className="flex items-center gap-2">
         <span>Hi, I'm <ScrambleText text="Shantanu" /></span>
-        <span className="inline-block w-3 h-[0.8em] bg-[var(--color-accent)] animate-pulse"></span>
+        <span className="inline-block w-3 h-[0.8em] bg-[var(--color-accent)] motion-safe:animate-pulse"></span>
       </h1>
       
       <div className="readme-card mt-8">
