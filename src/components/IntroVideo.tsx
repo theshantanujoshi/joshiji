@@ -7,8 +7,6 @@ export function IntroVideo() {
   const [showVideo, setShowVideo] = useState(true);
 
   const handleVideoEnd = () => {
-    // Set cookie to remember the user has seen the intro (expires in 1 day)
-    document.cookie = "introPlayed=true; path=/; max-age=86400";
     setShowVideo(false);
   };
 
