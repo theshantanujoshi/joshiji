@@ -68,7 +68,7 @@ export function Navigation() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative px-4 py-2 text-sm font-medium font-mono transition-colors whitespace-nowrap ${
+                className={`relative px-4 py-2 text-sm font-medium font-mono transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] rounded-full ${
                   isActive ? "text-[var(--color-foreground)]" : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 }`}
               >
