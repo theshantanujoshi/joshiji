@@ -42,14 +42,6 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mt-12 flex items-center gap-4 text-sm font-['Space_Grotesk'] text-[var(--color-muted-foreground)]">
-        <span className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
-          Open to work
-        </span>
-        <span>•</span>
-        <span>Based in India</span>
-      </div>
     </div>
   );
 }

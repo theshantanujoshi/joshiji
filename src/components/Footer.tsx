@@ -6,8 +6,12 @@ export function Footer() {
       <div className="max-w-[1000px] mx-auto px-[var(--spacing-md)] py-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 text-sm text-[var(--color-muted-foreground)] font-['Space_Grotesk']">
         
         {/* Left: Copyright */}
-        <div className="flex justify-center md:justify-start order-2 md:order-1">
+        <div className="flex flex-col items-center md:items-start order-2 md:order-1 gap-1">
           <p>© {new Date().getFullYear()} Shantanu Joshi. All rights reserved.</p>
+          <p className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-muted-foreground)]"></span>
+            Based in India
+          </p>
         </div>
 
         {/* Right: Signature */}
