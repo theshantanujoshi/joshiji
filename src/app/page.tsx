@@ -18,17 +18,17 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="mt-8 space-y-4">
-        <h3 className="font-bold text-xl text-[var(--color-foreground)]">Current Focus</h3>
-        <ul className="space-y-2 text-[var(--color-muted-foreground)]">
+      <div className="readme-card mt-8">
+        <h2>Current Focus</h2>
+        <ul>
           <li>→ Scaling a 1,500+ student dev collective at bits&bytes™</li>
           <li>→ Fostering a builder-first technical community via AWS Student Builder Group</li>
           <li>→ Engineering intuitive frontend architectures and exploring Agentic AI</li>
         </ul>
       </div>
 
-      <div className="mt-8">
-        <h3 className="font-bold text-xl text-[var(--color-foreground)] mb-4">Core Stack & Domains</h3>
+      <div className="readme-card mt-8">
+        <h2>Core Stack & Domains</h2>
         <div className="flex flex-wrap gap-2">
           {[
             "Artificial Intelligence", "Data Science", "React / Next.js", "Python", 
