@@ -23,8 +23,8 @@
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
   
-  --font-sans: var(--font-montserrat), sans-serif;
-  --font-mono: var(--font-montserrat), sans-serif;
+  --font-sans: var(--font-sans), sans-serif;
+  --font-mono: var(--font-mono), monospace;
 }
 
 @layer base {
@@ -37,7 +37,7 @@
     min-height: 100vh;
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-montserrat), sans-serif;
+    font-family: var(--font-sans);
   }
   
   body::before {
