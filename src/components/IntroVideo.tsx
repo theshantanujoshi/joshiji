@@ -5,13 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export function IntroVideo() {
   const [showVideo, setShowVideo] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const isMobile = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      setShowVideo(false);
-      return;
-    }
+    setMounted(true);
+    const mobileCheck = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
+    setIsMobile(mobileCheck);
 
     if (showVideo) {
       document.body.style.overflow = "hidden";
@@ -27,6 +27,8 @@ export function IntroVideo() {
     setShowVideo(false);
   };
 
+  const videoSrc = mounted && isMobile ? "/IntroVideoMobile.mp4" : "/IntroVideo.mp4";
+
   return (
     <AnimatePresence>
       {showVideo && (
@@ -34,16 +36,17 @@ export function IntroVideo() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[999] bg-black items-center justify-center hidden md:flex"
+          className="fixed inset-0 z-[999] bg-black flex items-center justify-center"
         >
           <video
+            key={videoSrc}
             autoPlay
             muted
             playsInline
             onEnded={handleVideoEnd}
             className="w-full h-full object-cover"
           >
-            <source src="/IntroVideo.mp4" type="video/mp4" />
+            <source src={videoSrc} type="video/mp4" />
           </video>
         </motion.div>
       )}
