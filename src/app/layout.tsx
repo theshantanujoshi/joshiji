@@ -7,6 +7,8 @@ import { GlobalDelight } from "@/components/GlobalDelight";
 import { SmoothScroller } from "@/components/SmoothScroller";
 import CRTWarp from "@/components/CRTWarp";
 import { IntroVideo } from "@/components/IntroVideo";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -97,6 +99,8 @@ export default function RootLayout({
             <Footer />
           </div>
         </SmoothScroller>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
