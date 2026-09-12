@@ -21,8 +21,28 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shantanu Joshi",
+  metadataBase: new URL("https://www.shantanu.lol"),
+  title: {
+    default: "Shantanu Joshi",
+    template: "%s | Shantanu Joshi",
+  },
   description: "Builder focused on original tech and agentic AI.",
+  keywords: ["Shantanu Joshi", "AI", "Data Science", "Software Engineer", "IIT Jodhpur", "Generative AI"],
+  authors: [{ name: "Shantanu Joshi" }],
+  openGraph: {
+    title: "Shantanu Joshi",
+    description: "Builder focused on original tech and agentic AI.",
+    url: "https://www.shantanu.lol",
+    siteName: "Shantanu Joshi",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shantanu Joshi",
+    description: "Builder focused on original tech and agentic AI.",
+    creator: "@okayjoshiji",
+  },
 };
 
 export default function RootLayout({

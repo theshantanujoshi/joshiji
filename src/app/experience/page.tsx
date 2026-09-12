@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Experience",
+  description: "Shantanu Joshi's professional experience, internships, and education.",
+};
+
 export default function Experience() {
   const experiences = [
     {
