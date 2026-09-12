@@ -74,10 +74,11 @@ function SignatureAnimation({
               playAnimation();
             }
           }, 50);
-        } else {
-          // Cancel ongoing animation when it goes out of view
-          cancelCurrentAnimation = true;
-          resetPaths();
+          
+          // Stop observing once it has been triggered so it only plays once
+          if (signRef.current && observer) {
+            observer.unobserve(signRef.current);
+          }
         }
       },
       { threshold: 0.5 }
