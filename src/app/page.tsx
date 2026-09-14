@@ -1,4 +1,5 @@
 import { ScrambleText } from "@/components/ScrambleText";
+import { CustomAudioPlayer } from "@/components/CustomAudioPlayer";
 
 export default function Home() {
   return (
@@ -41,6 +42,8 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      <CustomAudioPlayer />
 
     </div>
   );

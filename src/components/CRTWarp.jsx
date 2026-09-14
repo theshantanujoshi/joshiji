@@ -164,6 +164,7 @@ export default function CRTWarp({
     pausedRef.current = paused;
   }, [paused]);
 
+
   useEffect(() => {
     fpsRef.current = Math.max(1, fps);
   }, [fps]);
