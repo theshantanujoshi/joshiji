@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform, animate, useMotionTemplate } from "framer-motion";
 import { ScrambleText } from "./ScrambleText";
-import { FastAverageColor } from "fast-average-color";
 
 function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
   const [isHolding, setIsHolding] = useState(false);
@@ -110,70 +109,13 @@ export function IntroVideo() {
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const realAccentRef = useRef<string>("");
-
   useEffect(() => {
     setMounted(true);
     const mobileCheck = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
     setIsMobile(mobileCheck);
-    
-    realAccentRef.current = document.documentElement.style.getPropertyValue("--color-accent");
-    const handleThemeChange = (e: any) => {
-      realAccentRef.current = e.detail;
-    };
-    window.addEventListener("theme-change", handleThemeChange);
-    return () => window.removeEventListener("theme-change", handleThemeChange);
   }, []);
 
   const videoSrc = mounted && isMobile ? "/IntroVideoMobile.mp4" : "/IntroVideo.mp4";
-
-  const restoreAccent = () => {
-    if (realAccentRef.current) {
-      document.documentElement.style.setProperty("--color-accent", realAccentRef.current);
-    } else {
-      document.documentElement.style.removeProperty("--color-accent");
-    }
-  };
-
-  useEffect(() => {
-    if (stage !== "video" || !videoRef.current || !mounted) {
-      if (stage === "done") {
-        restoreAccent();
-      }
-      return;
-    }
-    
-    const fac = new FastAverageColor();
-    const video = videoRef.current;
-    
-    let animFrame: number;
-    let lastTime = 0;
-    
-    const updateColor = (timestamp: number) => {
-      if (timestamp - lastTime > 150) {
-        if (!video.paused && !video.ended) {
-          try {
-            const color = fac.getColor(video);
-            document.documentElement.style.setProperty("--color-accent", color.hex);
-          } catch (e) {
-            // ignore
-          }
-        }
-        lastTime = timestamp;
-      }
-      animFrame = requestAnimationFrame(updateColor);
-    };
-    
-    const startTimeout = setTimeout(() => {
-      animFrame = requestAnimationFrame(updateColor);
-    }, 500);
-    
-    return () => {
-      clearTimeout(startTimeout);
-      if (animFrame) cancelAnimationFrame(animFrame);
-      restoreAccent();
-    };
-  }, [stage, mounted, videoSrc]);
 
   useEffect(() => {
     if (stage !== "done") {
