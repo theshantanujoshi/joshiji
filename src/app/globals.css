@@ -9,10 +9,10 @@
   --color-on-accent: #FFFFFF;
   --color-background: #09090B;
   --color-foreground: #FAFAFA;
-  --color-card: rgba(24, 24, 27, 0.5);
+  --color-card: rgba(9, 9, 11, 0.85); /* Darker cards to block bright CRT */
   --color-card-foreground: #FAFAFA;
   --color-muted: rgba(255, 255, 255, 0.1);
-  --color-muted-foreground: #A1A1AA;
+  --color-muted-foreground: #D4D4D8; /* Brighter muted text */
   --color-border: rgba(255, 255, 255, 0.2);
   
   --spacing-xs: 4px;
@@ -48,6 +48,12 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
   }
 
   ::selection {
@@ -87,7 +93,7 @@
 .readme-container p {
   margin-bottom: var(--spacing-md);
   line-height: 1.6;
-  color: var(--color-muted-foreground);
+  color: var(--color-foreground);
 }
 
 .readme-container a {
@@ -105,7 +111,7 @@
   list-style-type: disc;
   padding-left: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
-  color: var(--color-muted-foreground);
+  color: var(--color-foreground);
 }
 
 .readme-container li {

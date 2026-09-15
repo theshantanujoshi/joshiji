@@ -47,6 +47,8 @@ export const metadata: Metadata = {
   },
 };
 
+import TargetCursor from "@/components/TargetCursor";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -57,6 +59,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased font-sans`}
       >
+        <TargetCursor cursorColor="var(--color-accent)" cursorColorOnTarget="var(--color-foreground)" />
         <IntroVideo />
         <GlobalDelight />
         
@@ -71,7 +74,7 @@ export default function RootLayout({
             <Navigation />
             
             {/* Main Content Area */}
-            <main className="flex-1 w-full relative pt-12 md:pt-16 pb-12">
+            <main className="flex-1 w-full relative pt-32 md:pt-40 pb-12">
               {children}
             </main>
             

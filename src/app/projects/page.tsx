@@ -47,7 +47,7 @@ export default function Projects() {
       <div className="grid grid-cols-1 gap-6">
         {projects.map((project, i) => (
           <div key={i} className="readme-card group hover:border-[var(--color-accent)] transition-colors">
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 no-underline mb-2 group/link">
+            <a href={project.github} target="_blank" rel="noopener noreferrer" className="cursor-target inline-flex items-center gap-1 no-underline mb-2 group/link">
               <h3 className="text-xl font-bold font-mono text-[var(--color-foreground)] m-0 border-0 pb-0 group-hover/link:text-[var(--color-accent)] transition-colors">
                 <ScrambleText text={project.title} />
               </h3>

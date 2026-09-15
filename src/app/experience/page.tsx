@@ -98,14 +98,14 @@ export default function Experience() {
                   
                   {role.type && <p className="text-sm text-[var(--color-accent)] mb-2">{role.type}</p>}
                   
-                  <p className="text-[var(--color-muted-foreground)] text-sm mb-3 leading-relaxed">
+                  <p className="text-[var(--color-foreground)] text-sm mb-3 leading-relaxed">
                     {role.description}
                   </p>
                   
                   {role.skills && role.skills.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-2">
                       {role.skills.map(skill => (
-                        <span key={skill} className="text-xs px-2 py-1 bg-[var(--color-muted)] rounded text-[var(--color-muted-foreground)] font-mono">
+                        <span key={skill} className="cursor-target text-xs px-2 py-1 bg-[var(--color-muted)] rounded text-[var(--color-foreground)] font-mono hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] border border-transparent transition-colors">
                           {skill}
                         </span>
                       ))}
@@ -186,7 +186,7 @@ export default function Experience() {
           { name: "Analytics", issuer: "Google", date: "Jul 2025" },
           { name: "Campaign Manager 360", issuer: "Google", date: "Jul 2025" },
         ].map((cert, idx) => (
-          <div key={idx} className="readme-card group hover:border-[var(--color-accent)] transition-colors !mb-0 p-4">
+          <div key={idx} className="cursor-target readme-card group hover:border-[var(--color-accent)] transition-colors !mb-0 p-4">
             <div className="flex flex-col">
               <h3 className="font-semibold text-[var(--color-foreground)] font-mono leading-tight mb-2">{cert.name}</h3>
               <div className="flex justify-between items-center mt-auto">

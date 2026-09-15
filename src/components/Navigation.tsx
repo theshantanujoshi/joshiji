@@ -47,7 +47,7 @@ export function Navigation() {
 
   return (
     <>
-      <div className="w-full sticky top-4 md:top-6 z-50 flex justify-center px-4 mt-4 md:mt-6 pointer-events-none">
+      <div className="w-full fixed top-8 md:top-14 z-50 flex justify-center px-4 pointer-events-none">
         <nav className="w-full max-w-5xl border border-white/10 p-2 md:px-6 md:py-3 flex flex-row items-center justify-between bg-[var(--color-card)]/70 backdrop-blur-xl rounded-full shadow-2xl pointer-events-auto transition-all">
           <div className="flex items-center shrink-0 mr-2 md:mr-0 pl-1 md:pl-0">
             <Link href="/" className="no-underline flex items-center gap-3 group">
@@ -70,7 +70,7 @@ export function Navigation() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative px-3 py-2 md:px-4 md:py-3 min-h-[36px] md:min-h-[44px] flex items-center justify-center text-xs md:text-sm font-medium font-mono transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] rounded-full snap-start shrink-0 ${
+                className={`cursor-target relative px-3 py-2 md:px-4 md:py-3 min-h-[36px] md:min-h-[44px] flex items-center justify-center text-xs md:text-sm font-medium font-mono transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] rounded-full snap-start shrink-0 ${
                   isActive ? "text-[var(--color-foreground)]" : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 }`}
               >

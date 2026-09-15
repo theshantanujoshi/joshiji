@@ -118,7 +118,11 @@ export function CustomAudioPlayer() {
     if (playlist[initialIndex]?.color) {
       window.dispatchEvent(new CustomEvent("themeChange", { detail: { color: playlist[initialIndex].color } }));
       (window as any).__themeColor = playlist[initialIndex].color;
+      document.documentElement.style.setProperty("--color-accent", playlist[initialIndex].color);
     }
+
+    // Attempt to autoplay on load
+    setIsPlaying(true);
   }, []);
 
   const track = playlist[currentTrackIndex];
@@ -128,6 +132,7 @@ export function CustomAudioPlayer() {
     if (track && track.color) {
       window.dispatchEvent(new CustomEvent("themeChange", { detail: { color: track.color } }));
       (window as any).__themeColor = track.color;
+      document.documentElement.style.setProperty("--color-accent", track.color);
     }
   }, [currentTrackIndex]);
 
@@ -144,16 +149,84 @@ export function CustomAudioPlayer() {
     };
   }, [currentTrackIndex]);
 
+  const hasInteractedRef = useRef(false);
+
+  // Handle browser autoplay policy by waiting for the first user interaction
+  useEffect(() => {
+    const forcePlay = () => {
+      hasInteractedRef.current = true;
+      if (audioRef.current && audioRef.current.paused) {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) playPromise.catch(() => {});
+      }
+      setIsPlaying(true);
+    };
+
+    window.addEventListener("forceAudioPlay", forcePlay);
+
+    const handleFirstInteraction = () => {
+      if (hasInteractedRef.current) return;
+      hasInteractedRef.current = true;
+      
+      // Call play() synchronously inside the event handler to satisfy strict browser policies
+      if (audioRef.current && audioRef.current.paused) {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+             // Silently catch if it still fails
+          });
+        }
+      }
+      
+      setIsPlaying(true);
+      
+      // Remove listeners once interacted
+      window.removeEventListener("click", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
+      window.removeEventListener("touchstart", handleFirstInteraction);
+      window.removeEventListener("scroll", handleFirstInteraction);
+    };
+
+    if (!hasInteractedRef.current) {
+      window.addEventListener("click", handleFirstInteraction);
+      window.addEventListener("keydown", handleFirstInteraction);
+      window.addEventListener("touchstart", handleFirstInteraction);
+      window.addEventListener("scroll", handleFirstInteraction, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener("forceAudioPlay", forcePlay);
+      window.removeEventListener("click", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
+      window.removeEventListener("touchstart", handleFirstInteraction);
+      window.removeEventListener("scroll", handleFirstInteraction);
+    };
+  }, []); // Run only once on mount
+
   const togglePlay = () => {
+    hasInteractedRef.current = true;
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) playPromise.catch(() => {});
+      }
+    }
     setIsPlaying(prev => !prev);
   };
 
   const handleNext = () => {
+    hasInteractedRef.current = true;
     setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
     setIsPlaying(true);
+    // Note: track change updates the src, so the useEffect handles playing the new track.
+    // The interaction bit might be lost here, but since the user has already interacted,
+    // the domain should be whitelisted for autoplay for this session.
   };
 
   const handlePrev = () => {
+    hasInteractedRef.current = true;
     setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     setIsPlaying(true);
   };
@@ -170,7 +243,10 @@ export function CustomAudioPlayer() {
       if (playPromiseRef.current !== undefined) {
         playPromiseRef.current.catch((err) => {
           if (err.name !== "AbortError") {
-             console.error("Playback error:", err);
+             // Browsers block autoplay without interaction. Suppress the noisy console error for this specific case.
+             if (err.name !== "NotAllowedError") {
+               console.error("Playback error:", err);
+             }
              setIsPlaying(false);
           }
         });
@@ -192,13 +268,13 @@ export function CustomAudioPlayer() {
 
   return (
     <div className="flex items-center gap-1 md:gap-2 ml-2 pl-2 border-l border-[var(--color-border)] shrink-0 snap-start">
-      <button onClick={handlePrev} className="text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors p-1">
+      <button onClick={handlePrev} className="cursor-target text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors p-1">
         <SkipBack className="w-3.5 h-3.5 md:w-4 md:h-4" />
       </button>
-      <button onClick={togglePlay} className="relative w-7 h-7 md:w-8 md:h-8 rounded-full overflow-hidden group hover:ring-2 ring-[var(--color-accent)] transition-all shrink-0 shadow-sm" title={track.title}>
+      <button onClick={togglePlay} className="cursor-target relative w-7 h-7 md:w-8 md:h-8 rounded-full overflow-hidden group hover:ring-2 ring-[var(--color-accent)] transition-all shrink-0 shadow-sm" title={track.title}>
         <img src={track.cover} alt={track.title} className={`w-full h-full object-cover ${isPlaying ? 'animate-[spin_10s_linear_infinite]' : ''}`} crossOrigin="anonymous" />
       </button>
-      <button onClick={handleNext} className="text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors p-1">
+      <button onClick={handleNext} className="cursor-target text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors p-1">
         <SkipForward className="w-3.5 h-3.5 md:w-4 md:h-4" />
       </button>
       

@@ -45,7 +45,7 @@ export default function Socials() {
               key={social.name}
               href={social.href}
               onClick={social.copyText ? (e) => handleCopy(e, social.copyText!) : undefined}
-              className="flex items-center justify-between p-3 sm:p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] group no-underline transition-all duration-300 hover:border-[var(--color-accent)] hover:shadow-md cursor-pointer"
+              className="cursor-target flex items-center justify-between p-3 sm:p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] group no-underline transition-all duration-300 hover:border-[var(--color-accent)] hover:shadow-md cursor-pointer"
               target={social.copyText ? undefined : "_blank"}
               rel={social.copyText ? undefined : "noopener noreferrer"}
             >
