@@ -168,13 +168,7 @@ export function IntroVideo() {
             <source src={videoSrc} type="video/mp4" />
           </video>
 
-          {stage === "video" && isMobile && (
-            <div 
-              className="absolute bottom-12 text-white/50 font-mono text-sm tracking-widest animate-pulse pointer-events-none"
-            >
-              [tap to skip]
-            </div>
-          )}
+
 
           <AnimatePresence>
             {stage === "initialize" && (
