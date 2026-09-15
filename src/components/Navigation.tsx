@@ -6,11 +6,13 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { CustomAudioPlayer } from "./CustomAudioPlayer";
 
+import { Terminal, Cpu, AtSign, Home } from "lucide-react";
+
 const links = [
-  { name: "Home", href: "/", key: "h" },
-  { name: "Experience", href: "/experience", key: "e" },
-  { name: "Projects", href: "/projects", key: "p" },
-  { name: "Contact", href: "/contact", key: "c" },
+  { name: "Home", href: "/", key: "h", icon: Home },
+  { name: "Experience", href: "/experience", key: "e", icon: Terminal },
+  { name: "Projects", href: "/projects", key: "p", icon: Cpu },
+  { name: "Contact", href: "/contact", key: "c", icon: AtSign },
 ];
 
 export function Navigation() {
@@ -75,7 +77,9 @@ export function Navigation() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`cursor-target relative px-3 py-2 md:px-4 md:py-3 min-h-[36px] md:min-h-[44px] flex items-center justify-center text-xs md:text-sm font-medium font-mono transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] rounded-full snap-start shrink-0 ${
+                className={`cursor-target relative px-3 py-2 md:px-4 md:py-3 min-h-[36px] md:min-h-[44px] items-center justify-center text-xs md:text-sm font-medium font-mono transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] rounded-full snap-start shrink-0 ${
+                  link.name === "Home" ? "hidden md:flex" : "flex"
+                } ${
                   isActive ? "text-[var(--color-foreground)]" : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
                 }`}
               >
@@ -95,7 +99,11 @@ export function Navigation() {
                   <span className={`${isActive ? "text-[var(--color-accent)]" : "opacity-0 hidden md:inline-block"} transition-opacity duration-200`}>
                     &gt;
                   </span>
-                  {link.name} <span className="hidden md:inline-block text-[10px] opacity-50 ml-1">[{link.key.toUpperCase()}]</span>
+                  
+                  {link.icon && <link.icon className="w-4 h-4 md:hidden block" />}
+                  
+                  <span className="hidden md:inline-block">{link.name}</span>
+                  <span className="hidden md:inline-block text-[10px] opacity-50 ml-1">[{link.key.toUpperCase()}]</span>
                 </span>
               </Link>
             );
