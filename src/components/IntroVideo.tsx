@@ -218,6 +218,7 @@ export function IntroVideo() {
             autoPlay
             muted
             playsInline
+            crossOrigin="anonymous"
             onEnded={handleVideoEnd}
             onClick={handleVideoEnd}
             className="w-full h-full object-cover cursor-pointer"

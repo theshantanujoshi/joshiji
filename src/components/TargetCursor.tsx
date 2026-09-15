@@ -243,13 +243,19 @@ const TargetCursor = ({
         gsap.to(corners, {
           borderColor: cursorColorOnTarget,
           duration: 0.15,
-          ease: 'power2.out'
+          ease: 'power2.out',
+          onComplete: () => {
+            corners.forEach(c => (c as HTMLElement).style.borderColor = cursorColorOnTarget);
+          }
         });
         if (dotRef.current) {
           gsap.to(dotRef.current, {
             backgroundColor: cursorColorOnTarget,
             duration: 0.15,
-            ease: 'power2.out'
+            ease: 'power2.out',
+            onComplete: () => {
+              if (dotRef.current) dotRef.current.style.backgroundColor = cursorColorOnTarget;
+            }
           });
         }
       }
@@ -294,16 +300,23 @@ const TargetCursor = ({
         activeTarget = null;
 
         if (cursorColorOnTarget && cornersRef.current) {
-          gsap.to(Array.from(cornersRef.current), {
+          const cornersArray = Array.from(cornersRef.current);
+          gsap.to(cornersArray, {
             borderColor: cursorColor,
             duration: 0.15,
-            ease: 'power2.out'
+            ease: 'power2.out',
+            onComplete: () => {
+              cornersArray.forEach(c => (c as HTMLElement).style.borderColor = cursorColor);
+            }
           });
           if (dotRef.current) {
             gsap.to(dotRef.current, {
               backgroundColor: cursorColor,
               duration: 0.15,
-              ease: 'power2.out'
+              ease: 'power2.out',
+              onComplete: () => {
+                if (dotRef.current) dotRef.current.style.backgroundColor = cursorColor;
+              }
             });
           }
         }
