@@ -70,7 +70,7 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
       />
       
       <motion.div 
-        style={{ scale, filter: dynamicFilter }}
+        style={{ scale, filter: dynamicFilter, pointerEvents: isCompleted ? "none" : "auto" }}
         className={`relative flex flex-col items-center gap-6 p-8 rounded-2xl ${isCompleted ? "" : "cursor-target"}`}
       >
         <motion.div 
@@ -110,19 +110,35 @@ export function IntroVideo() {
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const realAccentRef = useRef<string>("");
 
   useEffect(() => {
     setMounted(true);
     const mobileCheck = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
     setIsMobile(mobileCheck);
+    
+    realAccentRef.current = document.documentElement.style.getPropertyValue("--color-accent");
+    const handleThemeChange = (e: any) => {
+      realAccentRef.current = e.detail;
+    };
+    window.addEventListener("theme-change", handleThemeChange);
+    return () => window.removeEventListener("theme-change", handleThemeChange);
   }, []);
 
   const videoSrc = mounted && isMobile ? "/IntroVideoMobile.mp4" : "/IntroVideo.mp4";
 
+  const restoreAccent = () => {
+    if (realAccentRef.current) {
+      document.documentElement.style.setProperty("--color-accent", realAccentRef.current);
+    } else {
+      document.documentElement.style.removeProperty("--color-accent");
+    }
+  };
+
   useEffect(() => {
     if (stage !== "video" || !videoRef.current || !mounted) {
       if (stage === "done") {
-        document.documentElement.style.removeProperty("--color-accent");
+        restoreAccent();
       }
       return;
     }
@@ -155,7 +171,7 @@ export function IntroVideo() {
     return () => {
       clearTimeout(startTimeout);
       if (animFrame) cancelAnimationFrame(animFrame);
-      document.documentElement.style.removeProperty("--color-accent");
+      restoreAccent();
     };
   }, [stage, mounted, videoSrc]);
 
@@ -164,11 +180,9 @@ export function IntroVideo() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
-      document.documentElement.style.removeProperty("--color-accent");
     }
     return () => {
       document.body.style.overflow = "";
-      document.documentElement.style.removeProperty("--color-accent");
     };
   }, [stage]);
 
