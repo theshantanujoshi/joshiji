@@ -120,7 +120,12 @@ export function IntroVideo() {
   const videoSrc = mounted && isMobile ? "/IntroVideoMobile.mp4" : "/IntroVideo.mp4";
 
   useEffect(() => {
-    if (stage !== "video" || !videoRef.current || !mounted) return;
+    if (stage !== "video" || !videoRef.current || !mounted) {
+      if (stage === "done") {
+        document.documentElement.style.removeProperty("--color-accent");
+      }
+      return;
+    }
     
     const fac = new FastAverageColor();
     const video = videoRef.current;
@@ -150,6 +155,7 @@ export function IntroVideo() {
     return () => {
       clearTimeout(startTimeout);
       if (animFrame) cancelAnimationFrame(animFrame);
+      document.documentElement.style.removeProperty("--color-accent");
     };
   }, [stage, mounted, videoSrc]);
 
@@ -158,9 +164,11 @@ export function IntroVideo() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.removeProperty("--color-accent");
     }
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.removeProperty("--color-accent");
     };
   }, [stage]);
 
@@ -186,8 +194,8 @@ export function IntroVideo() {
         <motion.div
           key="intro-container"
           id="intro-container"
-          exit={{ opacity: 0, scale: 1.05, pointerEvents: "none" }} // shattering scale out
-          transition={{ duration: 0.4, ease: "easeOut" }} // Fast snappy shatter transition
+          exit={{ opacity: 0, scale: 1.1, pointerEvents: "none" }} // shattering scale out
+          transition={{ duration: 0.15, ease: "easeOut" }} // Fast snappy shatter transition
           className="fixed inset-0 z-[999] bg-black flex items-center justify-center"
         >
           <video
