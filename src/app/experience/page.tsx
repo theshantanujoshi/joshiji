@@ -8,13 +8,13 @@ export const metadata: Metadata = {
 export default function Experience() {
   const experiences = [
     {
-      company: "AWS Student Builder Group at Indian Institute of Technology, Jodhpur",
+      company: "AWS Student Builder Group at IIT Jodhpur",
       roles: [
         {
           title: "Core Member",
           date: "Aug 2026 - Present",
           type: "Hybrid",
-          description: "I wear a lot of hats across tech, operations, community, and social media. From helping run hands-on AWS workshops and coordinating events to growing campus outreach and shaping content, I enjoy connecting strategy with execution. At the heart of it, I'm focused on building a strong cloud-native builder community.",
+          description: "Wear multiple hats spanning engineering, operations, and community growth. From running hands-on AWS workshops to scaling campus outreach, I bridge the gap between technical strategy and execution to build a robust cloud-native community.",
           skills: ["Community Building", "Event Management", "AWS"]
         }
       ]
@@ -26,14 +26,14 @@ export default function Experience() {
           title: "Head of Ground Operations",
           date: "May 2026 - Present",
           type: "Full-time • Hybrid",
-          description: "Handling ground logistics, infrastructure setup, and floor coordination, keeping everything running smoothly and the energy high.",
+          description: "Manage ground logistics, infrastructure, and event operations to ensure smooth execution and high engagement.",
           skills: ["Event Management", "Cross-functional Team Leadership"]
         },
         {
           title: "Creative Contributor & Content Writer",
           date: "Apr 2026 - May 2026",
           type: "",
-          description: "I turn technical work into clear, engaging stories that people can understand.",
+          description: "Translate complex technical concepts into clear, engaging narratives for a broad audience.",
           skills: ["Brand Strategy", "Content Writing"]
         }
       ]
@@ -45,7 +45,7 @@ export default function Experience() {
           title: "Web Engineer Lead",
           date: "Jul 2025 - Nov 2025",
           type: "Lucknow, India • Hybrid",
-          description: "Engineered the secure frontend architecture for a post incident cybercrime support system, building optimized, intuitive interfaces to assist victims under high pressure scenarios.",
+          description: "Engineered the secure frontend architecture for a post-incident cybercrime support system. Designed optimized, intuitive interfaces to assist victims in high-pressure scenarios.",
           skills: ["Front-End Development", "GitHub", "Architecture"]
         }
       ]
@@ -57,7 +57,7 @@ export default function Experience() {
           title: "Generative AI Engineer (Internship)",
           date: "Jul 2025 - Aug 2025",
           type: "Internship",
-          description: "Completed a job simulation involving AI-powered data analytics and strategy development for the Financial Services team at Tata iQ. Conducted exploratory data analysis (EDA) using GenAI tools to assess data quality and identify risk indicators. Designed an AI-driven collections strategy leveraging agentic AI and automation, incorporating ethical AI principles and regulatory compliance.",
+          description: "Executed a job simulation in AI-driven data analytics for Tata iQ's Financial Services team. Leveraged GenAI tools for exploratory data analysis to identify risk indicators. Designed an automated collections strategy using Agentic AI, balancing operational efficiency with ethical compliance.",
           skills: ["Strategic Thinking", "Exploratory Data Analysis", "Generative AI"]
         }
       ]
@@ -69,7 +69,7 @@ export default function Experience() {
           title: "Quantitative Researcher (Internship)",
           date: "Jun 2025 - Jul 2025",
           type: "Internship",
-          description: "Focused on quantitative research methods, analyzed a book of loans to estimate a customer's probability of default and used dynamic programming to convert FICO scores into categorical data to predict defaults.",
+          description: "Applied quantitative research methods to analyze a loan portfolio, estimating customer default probabilities. Utilized dynamic programming to categorize FICO scores and enhance default prediction models.",
           skills: ["Statistics", "Data Analysis", "Dynamic Programming"]
         }
       ]
