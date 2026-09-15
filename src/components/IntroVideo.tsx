@@ -79,7 +79,7 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
             y: [1, -1, 1, -1, 0]
           } : { x: 0, y: 0 }}
           transition={isHolding ? { repeat: Infinity, duration: 0.1 } : undefined}
-          className="font-mono text-sm md:text-base tracking-[0.2em] lowercase font-semibold"
+          className="font-mono text-base md:text-xl tracking-[0.2em] lowercase font-semibold"
           style={{ 
             opacity, 
             color: "var(--color-accent)",
@@ -90,7 +90,7 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
         </motion.div>
         
         {/* Brutalist Progress Bar */}
-        <div className="w-64 md:w-80 h-[2px] bg-white/10 relative overflow-hidden">
+        <div className="w-72 md:w-96 h-[3px] bg-white/10 relative overflow-hidden">
           <motion.div 
             className="absolute top-0 left-0 bottom-0"
             style={{ 
