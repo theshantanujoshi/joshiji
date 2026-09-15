@@ -9,7 +9,7 @@
   --color-on-accent: #FFFFFF;
   --color-background: #09090B;
   --color-foreground: #FAFAFA;
-  --color-card: rgba(9, 9, 11, 0.85); /* Darker cards to block bright CRT */
+  --color-card: rgba(9, 9, 11, 0.65); /* Darker cards to block bright CRT */
   --color-card-foreground: #FAFAFA;
   --color-muted: rgba(255, 255, 255, 0.1);
   --color-muted-foreground: #D4D4D8; /* Brighter muted text */
