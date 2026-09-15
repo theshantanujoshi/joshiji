@@ -120,9 +120,6 @@ export function CustomAudioPlayer() {
       (window as any).__themeColor = playlist[initialIndex].color;
       document.documentElement.style.setProperty("--color-accent", playlist[initialIndex].color);
     }
-
-    // Attempt to autoplay on load
-    setIsPlaying(true);
   }, []);
 
   const track = playlist[currentTrackIndex];
@@ -151,7 +148,7 @@ export function CustomAudioPlayer() {
 
   const hasInteractedRef = useRef(false);
 
-  // Handle browser autoplay policy by waiting for the first user interaction
+  // Listen for explicit forceAudioPlay event (after 'yes' is typed)
   useEffect(() => {
     const forcePlay = () => {
       hasInteractedRef.current = true;
@@ -162,44 +159,14 @@ export function CustomAudioPlayer() {
       setIsPlaying(true);
     };
 
+    (window as any).__playAudio = forcePlay;
     window.addEventListener("forceAudioPlay", forcePlay);
 
-    const handleFirstInteraction = () => {
-      if (hasInteractedRef.current) return;
-      hasInteractedRef.current = true;
-      
-      // Call play() synchronously inside the event handler to satisfy strict browser policies
-      if (audioRef.current && audioRef.current.paused) {
-        const playPromise = audioRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-             // Silently catch if it still fails
-          });
-        }
-      }
-      
-      setIsPlaying(true);
-      
-      // Remove listeners once interacted
-      window.removeEventListener("click", handleFirstInteraction);
-      window.removeEventListener("keydown", handleFirstInteraction);
-      window.removeEventListener("touchstart", handleFirstInteraction);
-      window.removeEventListener("scroll", handleFirstInteraction);
-    };
-
-    if (!hasInteractedRef.current) {
-      window.addEventListener("click", handleFirstInteraction);
-      window.addEventListener("keydown", handleFirstInteraction);
-      window.addEventListener("touchstart", handleFirstInteraction);
-      window.addEventListener("scroll", handleFirstInteraction, { once: true });
-    }
-
     return () => {
+      if ((window as any).__playAudio === forcePlay) {
+        delete (window as any).__playAudio;
+      }
       window.removeEventListener("forceAudioPlay", forcePlay);
-      window.removeEventListener("click", handleFirstInteraction);
-      window.removeEventListener("keydown", handleFirstInteraction);
-      window.removeEventListener("touchstart", handleFirstInteraction);
-      window.removeEventListener("scroll", handleFirstInteraction);
     };
   }, []); // Run only once on mount
 
@@ -239,17 +206,19 @@ export function CustomAudioPlayer() {
     const audio = audioRef.current;
     
     if (isPlaying) {
-      playPromiseRef.current = audio.play();
-      if (playPromiseRef.current !== undefined) {
-        playPromiseRef.current.catch((err) => {
-          if (err.name !== "AbortError") {
-             // Browsers block autoplay without interaction. Suppress the noisy console error for this specific case.
-             if (err.name !== "NotAllowedError") {
-               console.error("Playback error:", err);
-             }
-             setIsPlaying(false);
-          }
-        });
+      if (audio.paused) {
+        playPromiseRef.current = audio.play();
+        if (playPromiseRef.current !== undefined) {
+          playPromiseRef.current.catch((err) => {
+            if (err.name !== "AbortError") {
+               // Browsers block autoplay without interaction. Suppress the noisy console error for this specific case.
+               if (err.name !== "NotAllowedError") {
+                 console.error("Playback error:", err);
+               }
+               setIsPlaying(false);
+            }
+          });
+        }
       }
     } else {
       if (playPromiseRef.current !== undefined) {

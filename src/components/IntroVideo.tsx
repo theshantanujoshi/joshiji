@@ -1,19 +1,107 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
 import { ScrambleText } from "./ScrambleText";
 
+function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
+  const [isHolding, setIsHolding] = useState(false);
+  const progress = useMotionValue(0);
+  const controlsRef = useRef<any>(null);
+  const completedRef = useRef(false);
+
+  // Derived values for visual intensity
+  const opacity = useTransform(progress, [0, 100], [0.6, 1]);
+  const scale = useTransform(progress, [0, 100], [1, 1.05]);
+  const bgOpacity = useTransform(progress, [0, 100], [0.2, 0.9]);
+  const barWidth = useTransform(progress, v => `${v}%`);
+  
+  const startHold = () => {
+    if (completedRef.current) return;
+    setIsHolding(true);
+    controlsRef.current = animate(progress, 100, {
+      duration: 0.8,
+      ease: "linear",
+      onUpdate: (latest) => {
+        if (latest >= 100 && !completedRef.current) {
+          completedRef.current = true;
+          onComplete();
+        }
+      }
+    });
+  };
+
+  const endHold = () => {
+    if (completedRef.current) return;
+    setIsHolding(false);
+    if (controlsRef.current) {
+      controlsRef.current.stop();
+    }
+    animate(progress, 0, { duration: 0.3, ease: "easeOut" });
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="absolute inset-0 z-50 flex items-center justify-center cursor-pointer select-none"
+      style={{ touchAction: 'none', WebkitTouchCallout: 'none' }}
+      onPointerDown={startHold}
+      onPointerUp={endHold}
+      onPointerLeave={endHold}
+      onPointerCancel={endHold}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      {/* Dynamic background darken */}
+      <motion.div 
+        className="absolute inset-0 bg-black pointer-events-none"
+        style={{ opacity: bgOpacity }}
+      />
+      
+      <motion.div 
+        style={{ scale }}
+        className="relative flex flex-col items-center gap-6"
+      >
+        <motion.div 
+          animate={isHolding ? { 
+            x: [-1, 1, -1, 1, 0],
+            y: [1, -1, 1, -1, 0]
+          } : { x: 0, y: 0 }}
+          transition={isHolding ? { repeat: Infinity, duration: 0.1 } : undefined}
+          className="font-mono text-sm md:text-base tracking-[0.2em] lowercase text-red-500 font-semibold"
+          style={{ 
+            opacity, 
+            textShadow: isHolding ? "0px 0px 12px rgba(239,68,68,0.6)" : "none" 
+          }}
+        >
+          hold to initialize...
+        </motion.div>
+        
+        {/* Brutalist Progress Bar */}
+        <div className="w-64 md:w-80 h-[2px] bg-white/10 relative overflow-hidden">
+          <motion.div 
+            className="absolute top-0 left-0 bottom-0 bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.8)]"
+            style={{ width: barWidth }}
+          />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function IntroVideo() {
-  const [stage, setStage] = useState<"video" | "welcome" | "done">("video");
+  const [stage, setStage] = useState<"video" | "initialize" | "done">("video");
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     setMounted(true);
     const mobileCheck = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
     setIsMobile(mobileCheck);
   }, []);
+
+  const videoSrc = mounted && isMobile ? "/IntroVideoMobile.mp4" : "/IntroVideo.mp4";
 
   useEffect(() => {
     if (stage !== "done") {
@@ -27,65 +115,55 @@ export function IntroVideo() {
   }, [stage]);
 
   const handleVideoEnd = () => {
-    setStage("welcome");
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    setStage("initialize");
   };
 
   const handleDiveIn = () => {
-    window.dispatchEvent(new CustomEvent("forceAudioPlay"));
+    if (typeof (window as any).__playAudio === "function") {
+      (window as any).__playAudio();
+    } else {
+      window.dispatchEvent(new CustomEvent("forceAudioPlay"));
+    }
     setStage("done");
   };
-
-  const videoSrc = mounted && isMobile ? "/IntroVideoMobile.mp4" : "/IntroVideo.mp4";
 
   return (
     <AnimatePresence>
       {stage !== "done" && (
         <motion.div
           key="intro-container"
-          exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          id="intro-container"
+          exit={{ opacity: 0, scale: 1.05 }} // shattering scale out
+          transition={{ duration: 0.4, ease: "easeOut" }} // Fast snappy shatter transition
           className="fixed inset-0 z-[999] bg-black flex items-center justify-center"
         >
           <video
+            ref={videoRef}
             key={videoSrc}
             autoPlay
             muted
             playsInline
             onEnded={handleVideoEnd}
-            className="w-full h-full object-cover"
+            onClick={handleVideoEnd}
+            className="w-full h-full object-cover cursor-pointer"
           >
             <source src={videoSrc} type="video/mp4" />
           </video>
 
-          <AnimatePresence>
-            {stage === "welcome" && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-                className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-              >
-                <button
-                  onClick={handleDiveIn}
-                  className="cursor-target group relative px-6 md:px-10 py-4 bg-transparent text-[var(--color-foreground)] font-mono text-xs md:text-sm tracking-[0.2em] overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl bg-black/40 backdrop-blur-md"
-                >
-                  {/* Cyberpunk corner brackets */}
-                  <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-white/40 group-hover:border-[var(--color-accent)] transition-colors duration-300" />
-                  <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-white/40 group-hover:border-[var(--color-accent)] transition-colors duration-300" />
-                  <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-white/40 group-hover:border-[var(--color-accent)] transition-colors duration-300" />
-                  <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-white/40 group-hover:border-[var(--color-accent)] transition-colors duration-300" />
+          {stage === "video" && isMobile && (
+            <div 
+              className="absolute bottom-12 text-white/50 font-mono text-sm tracking-widest animate-pulse pointer-events-none"
+            >
+              [tap to skip]
+            </div>
+          )}
 
-                  {/* Soft background glow on hover */}
-                  <div className="absolute inset-0 bg-[var(--color-accent)] opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
-                  
-                  {/* Button Content */}
-                  <div className="relative z-10 flex items-center justify-center gap-3">
-                    <span className="text-[var(--color-accent)] font-bold">&gt;</span>
-                    <span className="font-semibold"><ScrambleText text="EXECUTE_BOOT_SEQUENCE" /></span>
-                    <span className="w-1.5 h-4 bg-[var(--color-muted-foreground)] group-hover:bg-[var(--color-accent)] animate-pulse" />
-                  </div>
-                </button>
-              </motion.div>
+          <AnimatePresence>
+            {stage === "initialize" && (
+              <InitializeOverlay onComplete={handleDiveIn} />
             )}
           </AnimatePresence>
         </motion.div>

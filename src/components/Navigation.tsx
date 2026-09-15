@@ -31,6 +31,11 @@ export function Navigation() {
         return;
       }
 
+      // Ignore if the intro video is active, so users can type "yes"
+      if (document.getElementById("intro-container")) {
+        return;
+      }
+
       const key = e.key.toLowerCase();
       const link = links.find((l) => l.key === key);
 
