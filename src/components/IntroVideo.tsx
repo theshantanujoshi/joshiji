@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform, animate, useMotionTemplate } from "framer-motion";
 import { ScrambleText } from "./ScrambleText";
 import { FastAverageColor } from "fast-average-color";
 
@@ -18,11 +18,19 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
   const bgOpacity = useTransform(progress, [0, 100], [0.2, 0.9]);
   const barWidth = useTransform(progress, v => `${v}%`);
   
+  // Dynamic glow and brightness for higher peak brightness
+  const blurBase = useTransform(progress, [0, 100], [0, 24]);
+  const blurCore = useTransform(progress, [0, 100], [0, 8]);
+  const dynamicTextShadow = useMotionTemplate`0px 0px ${blurBase}px var(--color-accent), 0px 0px ${blurCore}px #ffffff`;
+  const dynamicBoxShadow = useMotionTemplate`0px 0px ${blurBase}px var(--color-accent), 0px 0px ${blurCore}px #ffffff`;
+  const brightness = useTransform(progress, [0, 100], [1, 1.5]);
+  const dynamicFilter = useMotionTemplate`brightness(${brightness})`;
+  
   const startHold = () => {
     if (completedRef.current) return;
     setIsHolding(true);
     controlsRef.current = animate(progress, 100, {
-      duration: 0.8,
+      duration: 1.5,
       ease: "linear",
       onUpdate: (latest) => {
         if (latest >= 100 && !completedRef.current) {
@@ -62,7 +70,7 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
       />
       
       <motion.div 
-        style={{ scale }}
+        style={{ scale, filter: dynamicFilter }}
         className={`relative flex flex-col items-center gap-6 p-8 rounded-2xl ${isCompleted ? "" : "cursor-target"}`}
       >
         <motion.div 
@@ -75,7 +83,7 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
           style={{ 
             opacity, 
             color: "var(--color-accent)",
-            textShadow: isHolding ? "0px 0px 12px var(--color-accent)" : "none" 
+            textShadow: isHolding ? dynamicTextShadow : "none" 
           }}
         >
           hold to initialize...
@@ -84,8 +92,12 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
         {/* Brutalist Progress Bar */}
         <div className="w-64 md:w-80 h-[2px] bg-white/10 relative overflow-hidden">
           <motion.div 
-            className="absolute top-0 left-0 bottom-0 shadow-[0_0_12px_var(--color-accent)]"
-            style={{ width: barWidth, backgroundColor: "var(--color-accent)" }}
+            className="absolute top-0 left-0 bottom-0"
+            style={{ 
+              width: barWidth, 
+              backgroundColor: "var(--color-accent)",
+              boxShadow: isHolding ? dynamicBoxShadow : "none"
+            }}
           />
         </div>
       </motion.div>
