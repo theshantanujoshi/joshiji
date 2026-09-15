@@ -2,7 +2,7 @@ import SignatureAnimation from "./SignatureAnimation";
 
 export function Footer() {
   return (
-    <footer className="w-full border-t border-[var(--color-border)] mt-auto bg-transparent overflow-hidden">
+    <footer className="w-full border-t border-[var(--color-border)] mt-auto bg-[var(--color-background)]/40 backdrop-blur-md overflow-hidden relative z-10">
       <div className="max-w-[1000px] mx-auto px-[var(--spacing-md)] py-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 text-sm text-[var(--color-muted-foreground)] font-mono">
         
         {/* Left: Copyright */}

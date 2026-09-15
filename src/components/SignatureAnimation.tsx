@@ -95,7 +95,7 @@ function SignatureAnimation({
         observer.disconnect();
       }
     };
-  }, [text, duration, delay]);
+  }, [children, duration, delay]);
 
   return (
     <div className="signature-main" ref={signRef}>
