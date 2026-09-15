@@ -7,6 +7,7 @@ import { FastAverageColor } from "fast-average-color";
 
 function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
   const [isHolding, setIsHolding] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const progress = useMotionValue(0);
   const controlsRef = useRef<any>(null);
   const completedRef = useRef(false);
@@ -26,6 +27,7 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
       onUpdate: (latest) => {
         if (latest >= 100 && !completedRef.current) {
           completedRef.current = true;
+          setIsCompleted(true);
           onComplete();
         }
       }
@@ -61,7 +63,7 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
       
       <motion.div 
         style={{ scale }}
-        className="relative flex flex-col items-center gap-6 cursor-target p-8 rounded-2xl"
+        className={`relative flex flex-col items-center gap-6 p-8 rounded-2xl ${isCompleted ? "" : "cursor-target"}`}
       >
         <motion.div 
           animate={isHolding ? { 
@@ -172,7 +174,7 @@ export function IntroVideo() {
         <motion.div
           key="intro-container"
           id="intro-container"
-          exit={{ opacity: 0, scale: 1.05 }} // shattering scale out
+          exit={{ opacity: 0, scale: 1.05, pointerEvents: "none" }} // shattering scale out
           transition={{ duration: 0.4, ease: "easeOut" }} // Fast snappy shatter transition
           className="fixed inset-0 z-[999] bg-black flex items-center justify-center"
         >
