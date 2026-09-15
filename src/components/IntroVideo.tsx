@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
 import { ScrambleText } from "./ScrambleText";
+import { FastAverageColor } from "fast-average-color";
 
 function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
   const [isHolding, setIsHolding] = useState(false);
@@ -44,7 +45,7 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="absolute inset-0 z-50 flex items-center justify-center cursor-pointer select-none"
+      className="absolute inset-0 z-50 flex items-center justify-center select-none"
       style={{ touchAction: 'none', WebkitTouchCallout: 'none' }}
       onPointerDown={startHold}
       onPointerUp={endHold}
@@ -60,7 +61,7 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
       
       <motion.div 
         style={{ scale }}
-        className="relative flex flex-col items-center gap-6"
+        className="relative flex flex-col items-center gap-6 cursor-target p-8 rounded-2xl"
       >
         <motion.div 
           animate={isHolding ? { 
@@ -68,10 +69,11 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
             y: [1, -1, 1, -1, 0]
           } : { x: 0, y: 0 }}
           transition={isHolding ? { repeat: Infinity, duration: 0.1 } : undefined}
-          className="font-mono text-sm md:text-base tracking-[0.2em] lowercase text-red-500 font-semibold"
+          className="font-mono text-sm md:text-base tracking-[0.2em] lowercase font-semibold"
           style={{ 
             opacity, 
-            textShadow: isHolding ? "0px 0px 12px rgba(239,68,68,0.6)" : "none" 
+            color: "var(--color-accent)",
+            textShadow: isHolding ? "0px 0px 12px var(--color-accent)" : "none" 
           }}
         >
           hold to initialize...
@@ -80,8 +82,8 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
         {/* Brutalist Progress Bar */}
         <div className="w-64 md:w-80 h-[2px] bg-white/10 relative overflow-hidden">
           <motion.div 
-            className="absolute top-0 left-0 bottom-0 bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.8)]"
-            style={{ width: barWidth }}
+            className="absolute top-0 left-0 bottom-0 shadow-[0_0_12px_var(--color-accent)]"
+            style={{ width: barWidth, backgroundColor: "var(--color-accent)" }}
           />
         </div>
       </motion.div>
@@ -102,6 +104,40 @@ export function IntroVideo() {
   }, []);
 
   const videoSrc = mounted && isMobile ? "/IntroVideoMobile.mp4" : "/IntroVideo.mp4";
+
+  useEffect(() => {
+    if (stage !== "video" || !videoRef.current || !mounted) return;
+    
+    const fac = new FastAverageColor();
+    const video = videoRef.current;
+    
+    let animFrame: number;
+    let lastTime = 0;
+    
+    const updateColor = (timestamp: number) => {
+      if (timestamp - lastTime > 150) {
+        if (!video.paused && !video.ended) {
+          try {
+            const color = fac.getColor(video);
+            document.documentElement.style.setProperty("--color-accent", color.hex);
+          } catch (e) {
+            // ignore
+          }
+        }
+        lastTime = timestamp;
+      }
+      animFrame = requestAnimationFrame(updateColor);
+    };
+    
+    const startTimeout = setTimeout(() => {
+      animFrame = requestAnimationFrame(updateColor);
+    }, 500);
+    
+    return () => {
+      clearTimeout(startTimeout);
+      if (animFrame) cancelAnimationFrame(animFrame);
+    };
+  }, [stage, mounted, videoSrc]);
 
   useEffect(() => {
     if (stage !== "done") {
