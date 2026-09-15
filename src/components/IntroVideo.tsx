@@ -14,7 +14,6 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
   // Derived values for visual intensity
   const opacity = useTransform(progress, [0, 100], [0.6, 1]);
   const scale = useTransform(progress, [0, 100], [1, 1.05]);
-  const bgOpacity = useTransform(progress, [0, 100], [0.2, 0.9]);
   const barWidth = useTransform(progress, v => `${v}%`);
   
   // Dynamic glow and brightness for higher peak brightness
@@ -62,11 +61,8 @@ function InitializeOverlay({ onComplete }: { onComplete: () => void }) {
       onPointerCancel={endHold}
       onContextMenu={(e) => e.preventDefault()}
     >
-      {/* Dynamic background darken */}
-      <motion.div 
-        className="absolute inset-0 bg-black pointer-events-none"
-        style={{ opacity: bgOpacity }}
-      />
+      {/* Solid black background */}
+      <div className="absolute inset-0 bg-black pointer-events-none" />
       
       <motion.div 
         style={{ scale, filter: dynamicFilter, pointerEvents: isCompleted ? "none" : "auto" }}
