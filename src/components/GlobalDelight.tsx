@@ -83,11 +83,18 @@ export function GlobalDelight() {
       "color: #FFB000; font-family: monospace;"
     );
 
+    let ticking = false;
     const handleMouseMove = (e: MouseEvent) => {
-      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+          document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 

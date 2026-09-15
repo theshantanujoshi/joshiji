@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -10,7 +10,7 @@ import { IntroVideo } from "@/components/IntroVideo";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const inter = Inter({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
@@ -57,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased font-sans`}
+        className={`${bricolage.variable} ${jetbrainsMono.variable} antialiased font-sans`}
       >
         <TargetCursor cursorColor="var(--color-accent)" cursorColorOnTarget="var(--color-foreground)" />
         <IntroVideo />

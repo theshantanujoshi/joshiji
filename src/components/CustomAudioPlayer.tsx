@@ -236,15 +236,17 @@ export function CustomAudioPlayer() {
   if (!isMounted || !track) return null;
 
   return (
-    <div className="flex items-center gap-1 md:gap-2 ml-2 pl-2 border-l border-[var(--color-border)] shrink-0 snap-start">
-      <button onClick={handlePrev} className="cursor-target text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors p-1">
-        <SkipBack className="w-3.5 h-3.5 md:w-4 md:h-4" />
+    <div className="flex items-center gap-0 md:gap-1 ml-2 pl-2 border-l border-[var(--color-border)] shrink-0 snap-start">
+      <button onClick={handlePrev} aria-label="Previous Track" className="cursor-target flex items-center justify-center min-w-[44px] min-h-[44px] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors">
+        <SkipBack className="w-4 h-4" />
       </button>
-      <button onClick={togglePlay} className="cursor-target relative w-7 h-7 md:w-8 md:h-8 rounded-full overflow-hidden group hover:ring-2 ring-[var(--color-accent)] transition-all shrink-0 shadow-sm" title={track.title}>
-        <img src={track.cover} alt={track.title} className={`w-full h-full object-cover ${isPlaying ? 'animate-[spin_10s_linear_infinite]' : ''}`} crossOrigin="anonymous" />
+      <button onClick={togglePlay} aria-label={isPlaying ? "Pause Track" : "Play Track"} className="cursor-target relative flex items-center justify-center min-w-[44px] min-h-[44px] group" title={track.title}>
+        <div className="relative w-7 h-7 md:w-8 md:h-8 rounded-full overflow-hidden group-hover:ring-2 ring-[var(--color-accent)] transition-all shrink-0 shadow-sm pointer-events-none">
+          <img src={track.cover} alt="" loading="lazy" className={`w-full h-full object-cover ${isPlaying ? 'animate-[spin_10s_linear_infinite]' : ''}`} crossOrigin="anonymous" />
+        </div>
       </button>
-      <button onClick={handleNext} className="cursor-target text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors p-1">
-        <SkipForward className="w-3.5 h-3.5 md:w-4 md:h-4" />
+      <button onClick={handleNext} aria-label="Next Track" className="cursor-target flex items-center justify-center min-w-[44px] min-h-[44px] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors">
+        <SkipForward className="w-4 h-4" />
       </button>
       
       {/* Hidden audio element */}

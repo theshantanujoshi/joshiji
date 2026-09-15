@@ -77,6 +77,7 @@ export function Navigation() {
               <Link
                 key={link.name}
                 href={link.href}
+                aria-label={link.name}
                 className={`cursor-target relative px-3 py-2 md:px-4 md:py-3 min-h-[36px] md:min-h-[44px] items-center justify-center text-xs md:text-sm font-medium font-mono transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background)] rounded-full snap-start shrink-0 ${
                   link.name === "Home" ? "hidden md:flex" : "flex"
                 } ${

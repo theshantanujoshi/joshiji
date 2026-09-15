@@ -185,20 +185,26 @@ const TargetCursor = ({
     const moveHandler = (e: MouseEvent) => moveCursor(e.clientX, e.clientY);
     window.addEventListener('mousemove', moveHandler);
 
+    let scrollTimeout: NodeJS.Timeout | null = null;
     const scrollHandler = () => {
       if (!activeTarget || !cursorRef.current) return;
-      const { x: offsetX, y: offsetY } = getOffset();
-      const mouseX = (gsap.getProperty(cursorRef.current, 'x') as number) + offsetX;
-      const mouseY = (gsap.getProperty(cursorRef.current, 'y') as number) + offsetY;
-      const elementUnderMouse = document.elementFromPoint(mouseX, mouseY);
-      const isStillOverTarget =
-        elementUnderMouse &&
-        (elementUnderMouse === activeTarget || elementUnderMouse.closest(targetSelector) === activeTarget);
-      if (!isStillOverTarget) {
-        if (currentLeaveHandler) {
-          currentLeaveHandler(new Event('mouseleave'));
+      if (scrollTimeout) return;
+      
+      scrollTimeout = setTimeout(() => {
+        scrollTimeout = null;
+        const { x: offsetX, y: offsetY } = getOffset();
+        const mouseX = (gsap.getProperty(cursorRef.current, 'x') as number) + offsetX;
+        const mouseY = (gsap.getProperty(cursorRef.current, 'y') as number) + offsetY;
+        const elementUnderMouse = document.elementFromPoint(mouseX, mouseY);
+        const isStillOverTarget =
+          elementUnderMouse &&
+          (elementUnderMouse === activeTarget || elementUnderMouse.closest(targetSelector) === activeTarget);
+        if (!isStillOverTarget) {
+          if (currentLeaveHandler) {
+            currentLeaveHandler(new Event('mouseleave'));
+          }
         }
-      }
+      }, 50);
     };
     window.addEventListener('scroll', scrollHandler, { passive: true });
 
