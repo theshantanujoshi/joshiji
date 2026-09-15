@@ -159,6 +159,10 @@ export default function CRTWarp({
   const visibleRef = useRef(true);
   const fpsRef = useRef(fps);
   const lastFrameRef = useRef(0);
+  
+  // Use state refs to smoothly transition colors over time
+  const colorTargetRef = useRef(new THREE.Color(color));
+  const bgColorTargetRef = useRef(new THREE.Color(backgroundColor));
 
   useEffect(() => {
     pausedRef.current = paused;
@@ -183,8 +187,8 @@ export default function CRTWarp({
         uResolution: { value: new THREE.Vector2(1, 1) },
         uTime: { value: 0 },
         uSpeed: { value: 0.5 },
-        uColor: { value: new THREE.Color('#c755f7') },
-        uBackgroundColor: { value: new THREE.Color('#05010a') },
+        uColor: { value: new THREE.Color(color) },
+        uBackgroundColor: { value: new THREE.Color(backgroundColor) },
         uCurvature: { value: 0.25 },
         uScanlineStrength: { value: 0.25 },
         uScanlineFrequency: { value: 200 },
@@ -242,7 +246,12 @@ export default function CRTWarp({
       const delta = Math.min(clock.getDelta(), 0.1);
       if (!pausedRef.current) material.uniforms.uTime.value += delta * material.uniforms.uSpeed.value;
       pointerCurrentRef.current.lerp(pointerTargetRef.current, 0.08);
-      material.uniforms.uPointer.value.copy(pointerCurrentRef.current);
+      material.uniforms.uPointer.value = pointerCurrentRef.current.clone();
+      
+      // Smoothly interpolate colors - assign new objects to bypass Three.js uniform caching
+      material.uniforms.uColor.value = material.uniforms.uColor.value.clone().lerp(colorTargetRef.current, 0.05);
+      material.uniforms.uBackgroundColor.value = material.uniforms.uBackgroundColor.value.clone().lerp(bgColorTargetRef.current, 0.05);
+      
       renderer.render(scene, camera);
     };
 
@@ -279,8 +288,11 @@ export default function CRTWarp({
     const renderer = rendererRef.current;
     if (!material || !renderer) return;
     const uniforms = material.uniforms;
-    uniforms.uColor.value.set(color);
-    uniforms.uBackgroundColor.value.set(backgroundColor);
+    
+    // Update target refs for lerping
+    colorTargetRef.current.set(color);
+    bgColorTargetRef.current.set(backgroundColor);
+    
     uniforms.uSpeed.value = speed;
     uniforms.uCurvature.value = curvature;
     uniforms.uScanlineStrength.value = scanlineStrength;
