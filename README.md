@@ -1,4 +1,4 @@
-# Shantanu.lol
+# shantanu.lol
 
 ![shantanu.lol banner](https://img.shields.io/badge/shantanu-lol-EF4444?style=for-the-badge)
 
