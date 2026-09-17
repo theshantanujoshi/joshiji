@@ -129,6 +129,7 @@ export function IntroVideo() {
       videoRef.current.pause();
     }
     setStage("initialize");
+    window.dispatchEvent(new CustomEvent("introVideoEnded"));
   };
 
   const handleDiveIn = () => {

@@ -117,17 +117,27 @@ export function CustomAudioPlayer() {
     setIsMounted(true);
   }, []);
 
-  const [hasStarted, setHasStarted] = useState(false);
+  const [canShowTheme, setCanShowTheme] = useState(false);
   const track = activePlaylist[currentTrackIndex];
 
-  // Also dispatch whenever track changes, but ONLY after audio has started playing
   useEffect(() => {
-    if (hasStarted && track && track.color) {
+    const handleReveal = () => setCanShowTheme(true);
+    window.addEventListener("introVideoEnded", handleReveal);
+    window.addEventListener("forceAudioPlay", handleReveal);
+    return () => {
+      window.removeEventListener("introVideoEnded", handleReveal);
+      window.removeEventListener("forceAudioPlay", handleReveal);
+    };
+  }, []);
+
+  // Dispatch track color after the intro video finishes, coloring the "Hold to Initialize" UI
+  useEffect(() => {
+    if (canShowTheme && track && track.color) {
       window.dispatchEvent(new CustomEvent("themeChange", { detail: { color: track.color } }));
       (window as any).__themeColor = track.color;
       document.documentElement.style.setProperty("--color-accent", track.color);
     }
-  }, [currentTrackIndex, hasStarted]);
+  }, [currentTrackIndex, canShowTheme, track]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -148,7 +158,7 @@ export function CustomAudioPlayer() {
   useEffect(() => {
     const forcePlay = () => {
       hasInteractedRef.current = true;
-      setHasStarted(true);
+      setCanShowTheme(true);
       if (audioRef.current && audioRef.current.paused) {
         const playPromise = audioRef.current.play();
         if (playPromise !== undefined) playPromise.catch(() => {});
@@ -169,7 +179,7 @@ export function CustomAudioPlayer() {
 
   const togglePlay = () => {
     hasInteractedRef.current = true;
-    setHasStarted(true);
+    setCanShowTheme(true);
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
@@ -183,14 +193,14 @@ export function CustomAudioPlayer() {
 
   const handleNext = () => {
     hasInteractedRef.current = true;
-    setHasStarted(true);
+    setCanShowTheme(true);
     setCurrentTrackIndex((prev) => (prev + 1) % activePlaylist.length);
     setIsPlaying(true);
   };
 
   const handlePrev = () => {
     hasInteractedRef.current = true;
-    setHasStarted(true);
+    setCanShowTheme(true);
     setCurrentTrackIndex((prev) => (prev - 1 + activePlaylist.length) % activePlaylist.length);
     setIsPlaying(true);
   };
