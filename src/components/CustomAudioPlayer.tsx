@@ -19,7 +19,7 @@ export const playlist: Track[] = [
     artist: "MASN",
     src: "/music/Track1/Strawberry Huracan.mp3", 
     cover: "/music/Track1/Strawberry-Huracan.webp",
-    color: "#00E5FF", // Electric Blue
+    color: "#FF1493", // Deep Pink
   },
   {
     id: "2",
@@ -27,7 +27,7 @@ export const playlist: Track[] = [
     artist: "Tai Verdes",
     src: "/music/Track2/AOK.mp3", 
     cover: "/music/Track2/AOK.webp",
-    color: "#39FF14", // Toxic Green
+    color: "#00FFFF", // Cyan
   },
   {
     id: "3",
@@ -35,7 +35,7 @@ export const playlist: Track[] = [
     artist: "The Astronomers, sammy rash",
     src: "/music/Track3/turn out fine (with sammy rash).mp3", 
     cover: "/music/Track3/turn_out_fine.webp",
-    color: "#FF007F", // Neon Pink
+    color: "#FF8C00", // Dark Orange
   },
   {
     id: "4",
@@ -43,7 +43,7 @@ export const playlist: Track[] = [
     artist: "Mishaal Tamer",
     src: "/music/Track4/Mister Mister.mp3", 
     cover: "/music/Track4/Mister_Mister.webp",
-    color: "#FFE600", // Pure Yellow
+    color: "#E2A97E", // Desert Sand
   },
   {
     id: "5",
@@ -51,7 +51,7 @@ export const playlist: Track[] = [
     artist: "Internet Money, Lil Tecca, Lil Mosey",
     src: "/music/Track5/JETSKI.mp3", 
     cover: "/music/Track5/JETSKI.webp",
-    color: "#8A2BE2", // Deep Violet
+    color: "#87CEFA", // Light Sky Blue
   },
   {
     id: "6",
@@ -59,7 +59,7 @@ export const playlist: Track[] = [
     artist: "The Weeknd",
     src: "/music/Track6/Reminder.mp3", 
     cover: "/music/Track6/Reminder.webp",
-    color: "#FF5E00", // Bright Orange
+    color: "#EF4444", // Vibrant Red
   },
   {
     id: "7",
@@ -67,7 +67,7 @@ export const playlist: Track[] = [
     artist: "KVSH, Schillist",
     src: "/music/Track7/Sicko Drop.mp3", 
     cover: "/music/Track7/Sicko_Drop.webp",
-    color: "#00FFB2", // Seafoam / Mint
+    color: "#00FFB2", // Neon Teal
   },
   {
     id: "8",
@@ -75,7 +75,7 @@ export const playlist: Track[] = [
     artist: "System Of A Down",
     src: "/music/Track8/War.mp3", 
     cover: "/music/Track8/War.webp",
-    color: "#E60000", // True Crimson
+    color: "#FFD700", // Gold
   },
   {
     id: "9",
@@ -83,7 +83,7 @@ export const playlist: Track[] = [
     artist: "WILLIS",
     src: "/music/Track9/Fight the Vegans.mp3", 
     cover: "/music/Track9/Fight_the_Vegans.webp",
-    color: "#D500FF", // Laser Purple
+    color: "#32CD32", // Lime Green
   },
   {
     id: "10",
@@ -91,7 +91,7 @@ export const playlist: Track[] = [
     artist: "Humble the Great",
     src: "/music/Track10/find your own.mp3", 
     cover: "/music/Track10/find_your_own.webp",
-    color: "#FFB300", // Amber Gold
+    color: "#607D8B", // Slate/Steel Blue
   }
 ];
 
@@ -101,37 +101,33 @@ export function CustomAudioPlayer() {
   const [isMounted, setIsMounted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
+  const [activePlaylist, setActivePlaylist] = useState<Track[]>(playlist);
+
   useEffect(() => {
-    const savedIndex = sessionStorage.getItem("randomTrackIndex");
-    let initialIndex = 0;
-    if (savedIndex !== null) {
-      initialIndex = parseInt(savedIndex, 10);
-      setCurrentTrackIndex(initialIndex);
-    } else {
-      initialIndex = Math.floor(Math.random() * playlist.length);
-      setCurrentTrackIndex(initialIndex);
-      sessionStorage.setItem("randomTrackIndex", initialIndex.toString());
-    }
-    setIsMounted(true);
+    const shuffled = [...playlist];
     
-    // Dispatch initial color immediately on mount
-    if (playlist[initialIndex]?.color) {
-      window.dispatchEvent(new CustomEvent("themeChange", { detail: { color: playlist[initialIndex].color } }));
-      (window as any).__themeColor = playlist[initialIndex].color;
-      document.documentElement.style.setProperty("--color-accent", playlist[initialIndex].color);
+    // Shuffle all tracks randomly
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
+    
+    setActivePlaylist(shuffled);
+    setCurrentTrackIndex(0);
+    setIsMounted(true);
   }, []);
 
-  const track = playlist[currentTrackIndex];
+  const [hasStarted, setHasStarted] = useState(false);
+  const track = activePlaylist[currentTrackIndex];
 
-  // Also dispatch whenever track changes
+  // Also dispatch whenever track changes, but ONLY after audio has started playing
   useEffect(() => {
-    if (track && track.color) {
+    if (hasStarted && track && track.color) {
       window.dispatchEvent(new CustomEvent("themeChange", { detail: { color: track.color } }));
       (window as any).__themeColor = track.color;
       document.documentElement.style.setProperty("--color-accent", track.color);
     }
-  }, [currentTrackIndex]);
+  }, [currentTrackIndex, hasStarted]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -152,6 +148,7 @@ export function CustomAudioPlayer() {
   useEffect(() => {
     const forcePlay = () => {
       hasInteractedRef.current = true;
+      setHasStarted(true);
       if (audioRef.current && audioRef.current.paused) {
         const playPromise = audioRef.current.play();
         if (playPromise !== undefined) playPromise.catch(() => {});
@@ -172,6 +169,7 @@ export function CustomAudioPlayer() {
 
   const togglePlay = () => {
     hasInteractedRef.current = true;
+    setHasStarted(true);
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
@@ -185,16 +183,15 @@ export function CustomAudioPlayer() {
 
   const handleNext = () => {
     hasInteractedRef.current = true;
-    setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
+    setHasStarted(true);
+    setCurrentTrackIndex((prev) => (prev + 1) % activePlaylist.length);
     setIsPlaying(true);
-    // Note: track change updates the src, so the useEffect handles playing the new track.
-    // The interaction bit might be lost here, but since the user has already interacted,
-    // the domain should be whitelisted for autoplay for this session.
   };
 
   const handlePrev = () => {
     hasInteractedRef.current = true;
-    setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+    setHasStarted(true);
+    setCurrentTrackIndex((prev) => (prev - 1 + activePlaylist.length) % activePlaylist.length);
     setIsPlaying(true);
   };
 
