@@ -6,15 +6,18 @@ The personal portfolio and digital garden of **Shantanu Joshi**, an AI & Data Sc
 
 Live at: [www.shantanu.lol](https://www.shantanu.lol)
 
-This repository holds the source code for the portfolio, designed with an obsessive focus on performance, fluid animations, typography, and "Apple-like" aesthetics—all driven by a modern React server-component architecture.
+This repository holds the source code for the portfolio, designed with an obsessive focus on performance, fluid animations, typography, and precise aesthetics. The architecture is driven by modern React Server Components and heavily relies on hardware-accelerated WebGL rendering.
 
 ## Features
 
-- **Fluid Smooth Scrolling:** Custom implementation of Lenis for buttery-smooth scroll hijacking that feels native and responsive.
-- **WebGL CRT Warp Background:** A stunning, interactive CRT plasma distortion background powered by Three.js and custom GLSL shaders that sits fixed behind the content.
-- **Modern Typography:** Optimized loading of **Inter** (for pristine, SF Pro-like neutral UI readability) and **JetBrains Mono** (for technical precision), implemented via `next/font/google`.
-- **Delightful Interactions:** Sophisticated micro-interactions built with Framer Motion and GSAP.
-- **Responsive & Accessible:** Fully responsive design built entirely with Tailwind CSS v4, supporting all device sizes with accessible semantic HTML.
+- **Immersive Boot Sequence:** A cinematic, terminal-style intro and initialization sequence that establishes the site's brutalist aesthetic before dropping the user into the experience.
+- **Dynamic Audio & Theming Engine:** A custom built-in audio player containing a curated 10-track playlist. The site's entire color palette, WebGL background, and cursor dynamically shift in real-time to match the dominant accent color extracted from the currently playing track's cover art.
+- **WebGL CRT Warp Background:** An interactive CRT plasma distortion background powered by Three.js and custom GLSL shaders that sits fixed behind the content, reacting to the global theme state.
+- **Fluid Smooth Scrolling:** Custom implementation of Lenis for buttery-smooth scroll hijacking that feels native and perfectly weighted.
+- **Hardware-Accelerated Cursor:** A custom target cursor that adapts to interactive DOM nodes and seamlessly adopts the site's current accent color.
+- **Modern Typography:** Optimized loading of **Bricolage Grotesque** and **JetBrains Mono**, implemented via next/font/google.
+- **Delightful Interactions:** Sophisticated micro-interactions and transitions built with Framer Motion and GSAP.
+- **Responsive Architecture:** Fully responsive design built entirely with Tailwind CSS v4, supporting all device viewports while maintaining accessible semantic HTML.
 
 ## Tech Stack
 
@@ -24,12 +27,12 @@ This repository holds the source code for the portfolio, designed with an obsess
 - **WebGL / Graphics:** [Three.js](https://threejs.org/) (React Bits CRTWarp)
 - **Animations:** [Framer Motion](https://www.framer.com/motion/) + [GSAP](https://gsap.com/)
 - **Scrolling:** [Lenis](https://github.com/darkroomengineering/lenis)
-- **Icons:** [Lucide React](https://lucide.dev/) & React Icons
+- **Icons:** [Lucide React](https://lucide.dev/)
 - **Deployment:** [Vercel](https://vercel.com/)
 
 ## Getting Started
 
-To run this project locally, make sure you have Node.js installed, then follow these steps:
+To run this project locally, ensure you have Node.js installed, then follow these steps:
 
 1. **Clone the repository:**
    ```bash
@@ -50,11 +53,12 @@ To run this project locally, make sure you have Node.js installed, then follow t
 4. **View the application:**
    Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## Architecture
+## Architecture Highlights
 
-- `src/app/layout.tsx`: Root layout handling global font injection (Inter & JetBrains Mono), the global `SmoothScroller` provider, and the underlying fixed `CRTWarp` WebGL background.
-- `src/app/page.tsx`: The main landing page / index.
-- `src/components/`: Reusable React components including navigation, footers, webGL effects, and animated text blocks (`ScrambleText`).
+- `src/app/layout.tsx`: Root layout handling global font injection, the global `SmoothScroller` provider, the `IntroVideo` blocker, and the underlying fixed `DynamicCRTWarpComponent`.
+- `src/app/page.tsx`: The primary landing page interface.
+- `src/components/CustomAudioPlayer.tsx`: The core audio and theming engine responsible for shuffling tracks and dispatching the `themeChange` event to sync colors across the DOM.
+- `src/components/IntroVideo.tsx`: The state machine governing the boot sequence and user interaction requirements before enabling audio.
 
 ## License
 
