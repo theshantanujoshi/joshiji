@@ -24,6 +24,9 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.shantanu.lol"),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "Shantanu Joshi",
     template: "%s | Shantanu Joshi",
