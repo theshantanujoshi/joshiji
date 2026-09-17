@@ -3,22 +3,10 @@ import { ScrambleText } from "@/components/ScrambleText";
 export default function Home() {
   return (
     <div className="readme-container pt-8 relative z-10">
-      <div className="mb-24 md:mb-32 mt-8 md:mt-12 relative group cursor-default">
-        <h1 className="!border-0 !m-0 !p-0 flex flex-col text-[15vw] sm:text-[12vw] md:text-[7.5rem] font-black leading-[0.85] tracking-tighter uppercase text-[var(--color-foreground)] select-none">
-          <span className="block opacity-20 hover:opacity-100 transition-opacity duration-500">SYSTEMS.</span>
-          <span className="block opacity-20 hover:opacity-100 transition-opacity duration-500">AGENTS.</span>
-          <span className="block flex items-end gap-2 md:gap-4 text-[var(--color-accent)]">
-            <ScrambleText text="SHANTANU" />
-            <span className="inline-block w-[6vw] sm:w-[5vw] md:w-[3.5rem] h-[0.7em] bg-[var(--color-accent)] motion-safe:animate-pulse mb-[1.5vw] sm:mb-[1vw] md:mb-[0.5rem]"></span>
-          </span>
+      <h1 className="flex items-center gap-2">
+          <span>Hi, I'm <ScrambleText text="Shantanu" /></span>
+          <span className="inline-block w-3 h-[0.8em] bg-[var(--color-accent)] motion-safe:animate-pulse"></span>
         </h1>
-        
-        <div className="mt-8 md:mt-12 font-mono text-xs md:text-sm text-[var(--color-muted-foreground)] tracking-widest uppercase flex flex-col sm:flex-row gap-3 sm:gap-6 border-l-2 border-[var(--color-accent)] pl-4 md:pl-6">
-          <span className="opacity-75">AI & Data Science @ IIT Jodhpur</span>
-          <span className="hidden sm:inline-block text-[var(--color-border)]">///</span>
-          <span className="text-[var(--color-foreground)] font-bold tracking-[0.25em]">Core @ bits&bytes</span>
-        </div>
-      </div>
       
       <div className="readme-card mt-8">
         <h2>About Me</h2>
