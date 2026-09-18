@@ -99,7 +99,7 @@ export function CustomAudioPlayer() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
   
   const [activePlaylist, setActivePlaylist] = useState<Track[]>(playlist);
 
@@ -139,19 +139,6 @@ export function CustomAudioPlayer() {
     }
   }, [currentTrackIndex, canShowTheme, track]);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const handleEnded = () => handleNext();
-
-    audio.addEventListener("ended", handleEnded);
-
-    return () => {
-      audio.removeEventListener("ended", handleEnded);
-    };
-  }, [currentTrackIndex]);
-
   const hasInteractedRef = useRef(false);
 
   // Listen for explicit forceAudioPlay event (after 'yes' is typed)
@@ -159,8 +146,9 @@ export function CustomAudioPlayer() {
     const forcePlay = () => {
       hasInteractedRef.current = true;
       setCanShowTheme(true);
-      if (audioRef.current && audioRef.current.paused) {
-        const playPromise = audioRef.current.play();
+      const audio = audioRefs.current[currentTrackIndex];
+      if (audio && audio.paused) {
+        const playPromise = audio.play();
         if (playPromise !== undefined) playPromise.catch(() => {});
       }
       setIsPlaying(true);
@@ -175,16 +163,17 @@ export function CustomAudioPlayer() {
       }
       window.removeEventListener("forceAudioPlay", forcePlay);
     };
-  }, []); // Run only once on mount
+  }, [currentTrackIndex]); // Run when current track changes so the closure has the correct index
 
   const togglePlay = () => {
     hasInteractedRef.current = true;
     setCanShowTheme(true);
-    if (audioRef.current) {
+    const audio = audioRefs.current[currentTrackIndex];
+    if (audio) {
       if (isPlaying) {
-        audioRef.current.pause();
+        audio.pause();
       } else {
-        const playPromise = audioRef.current.play();
+        const playPromise = audio.play();
         if (playPromise !== undefined) playPromise.catch(() => {});
       }
     }
@@ -209,35 +198,41 @@ export function CustomAudioPlayer() {
 
   // Single source of truth for playing/pausing to avoid AbortError
   useEffect(() => {
-    if (!audioRef.current) return;
-    const audio = audioRef.current;
-    
-    if (isPlaying) {
-      if (audio.paused) {
-        playPromiseRef.current = audio.play();
-        if (playPromiseRef.current !== undefined) {
-          playPromiseRef.current.catch((err) => {
-            if (err.name !== "AbortError") {
-               // Browsers block autoplay without interaction. Suppress the noisy console error for this specific case.
-               if (err.name !== "NotAllowedError") {
-                 console.error("Playback error:", err);
-               }
-               setIsPlaying(false);
+    audioRefs.current.forEach((audio, idx) => {
+      if (!audio) return;
+      
+      if (idx === currentTrackIndex) {
+        if (isPlaying) {
+          if (audio.paused) {
+            playPromiseRef.current = audio.play();
+            if (playPromiseRef.current !== undefined) {
+              playPromiseRef.current.catch((err) => {
+                if (err.name !== "AbortError") {
+                   if (err.name !== "NotAllowedError") {
+                     console.error("Playback error:", err);
+                   }
+                   setIsPlaying(false);
+                }
+              });
             }
-          });
+          }
+        } else {
+          if (playPromiseRef.current !== undefined) {
+            playPromiseRef.current.then(() => {
+              audio.pause();
+            }).catch(() => {});
+          } else {
+            audio.pause();
+          }
         }
-      }
-    } else {
-      if (playPromiseRef.current !== undefined) {
-        playPromiseRef.current.then(() => {
-          audio.pause();
-        }).catch(() => {
-          // Play promise was rejected (e.g. AbortError), no need to pause
-        });
       } else {
-        audio.pause();
+        // Pause all other tracks and reset their time to start
+        if (!audio.paused) {
+          audio.pause();
+        }
+        audio.currentTime = 0;
       }
-    }
+    });
   }, [currentTrackIndex, isPlaying]);
 
   if (!isMounted || !track) return null;
@@ -256,8 +251,18 @@ export function CustomAudioPlayer() {
         <SkipForward className="w-4 h-4" />
       </button>
       
-      {/* Hidden audio element */}
-      <audio ref={audioRef} src={track.src || undefined} preload="metadata" />
+      {/* Hidden audio elements for fast switching */}
+      {activePlaylist.map((t, idx) => (
+        <audio 
+          key={t.id}
+          ref={(el) => {
+            if (el) audioRefs.current[idx] = el;
+          }}
+          src={t.src} 
+          preload={idx === currentTrackIndex || idx === (currentTrackIndex + 1) % activePlaylist.length ? "auto" : "metadata"} 
+          onEnded={handleNext}
+        />
+      ))}
     </div>
   );
 }
