@@ -244,7 +244,15 @@ export function CustomAudioPlayer() {
       </button>
       <button onClick={togglePlay} aria-label={isPlaying ? "Pause Track" : "Play Track"} className="cursor-target relative flex items-center justify-center min-w-[44px] min-h-[44px] group" title={track.title}>
         <div className="relative w-7 h-7 md:w-8 md:h-8 rounded-full overflow-hidden group-hover:ring-2 ring-[var(--color-accent)] transition-all shrink-0 shadow-sm pointer-events-none">
-          <img src={track.cover} alt="" loading="lazy" className={`w-full h-full object-cover ${isPlaying ? 'animate-[spin_10s_linear_infinite]' : ''}`} crossOrigin="anonymous" />
+          {activePlaylist.map((t, idx) => (
+            <img 
+              key={t.id}
+              src={t.cover} 
+              alt="" 
+              className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-300 ${idx === currentTrackIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'} ${isPlaying && idx === currentTrackIndex ? 'animate-[spin_10s_linear_infinite]' : ''}`} 
+              crossOrigin="anonymous" 
+            />
+          ))}
         </div>
       </button>
       <button onClick={handleNext} aria-label="Next Track" className="cursor-target flex items-center justify-center min-w-[44px] min-h-[44px] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] transition-colors">
