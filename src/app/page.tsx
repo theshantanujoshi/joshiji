@@ -1,8 +1,42 @@
 import { ScrambleText } from "@/components/ScrambleText";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Shantanu Joshi",
+  description: "Portfolio of Shantanu Joshi, an AI & Data Science undergrad building original systems and intuitive frontend architectures.",
+  openGraph: {
+    title: "Shantanu Joshi",
+    description: "AI & Data Science undergrad building original systems and intuitive frontend architectures.",
+    url: "https://www.shantanu.lol",
+    siteName: "Shantanu Joshi",
+    type: "profile",
+  },
+};
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Shantanu Joshi",
+    url: "https://www.shantanu.lol",
+    jobTitle: "Software Engineer",
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "Indian Institute of Technology, Jodhpur"
+    },
+    sameAs: [
+      "https://github.com/theshantanujoshi",
+      "https://www.linkedin.com/in/theshantanujoshi",
+      "https://twitter.com/okayjoshiji"
+    ]
+  };
+
   return (
     <div className="readme-container pt-8 relative z-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="flex items-center gap-2">
           <span>Hi, I'm <ScrambleText text="Shantanu" /></span>
           <span className="inline-block w-3 h-[0.8em] bg-[var(--color-accent)] motion-safe:animate-pulse"></span>

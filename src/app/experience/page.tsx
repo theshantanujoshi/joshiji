@@ -6,6 +6,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/experience",
   },
+  openGraph: {
+    title: "Experience | Shantanu Joshi",
+    description: "Professional experience, internships, and education.",
+    url: "https://www.shantanu.lol/experience",
+    siteName: "Shantanu Joshi",
+  },
 };
 
 export default function Experience() {
@@ -88,14 +94,14 @@ export default function Experience() {
           <div key={idx} className="readme-card relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-1 h-full bg-[var(--color-accent)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
             
-            <h3 className="text-xl font-bold font-mono text-[var(--color-foreground)] mb-4">{exp.company}</h3>
+            <h2 className="text-xl font-bold font-mono text-[var(--color-foreground)] mb-4">{exp.company}</h2>
             
             <div className="space-y-6">
               {exp.roles.map((role, roleIdx) => (
                 <div key={roleIdx} className="relative">
                   
                   <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                    <h4 className="font-semibold text-base text-[var(--color-foreground)]">{role.title}</h4>
+                    <h3 className="font-semibold text-base text-[var(--color-foreground)]">{role.title}</h3>
                     <span className="text-[var(--color-muted-foreground)] text-sm font-mono">{role.date}</span>
                   </div>
                   
